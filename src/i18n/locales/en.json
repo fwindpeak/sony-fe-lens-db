@@ -131,9 +131,13 @@
   "sort": {
     "label": "Sort By",
     "overallScoreDesc": "Optical Score: High to Low",
+    "overallScoreAsc": "Optical Score: Low to High",
     "valueScoreDesc": "Value for Money: High to Low",
+    "valueScoreAsc": "Value for Money: Low to High",
     "portabilityScoreDesc": "Portability Index: High to Low",
+    "portabilityScoreAsc": "Portability Index: Low to High",
     "sharpnessScoreDesc": "Sharpness Rating: High to Low",
+    "sharpnessScoreAsc": "Sharpness Rating: Low to High",
     "priceCnyAsc": "Price: Low to High",
     "priceCnyDesc": "Price: High to Low",
     "weightGAsc": "Weight: Light to Heavy",
@@ -141,7 +145,9 @@
     "releaseDateDesc": "Release Date: Newest First",
     "releaseDateAsc": "Release Date: Oldest First",
     "focalMinAsc": "Focal Length: Wide to Tele",
-    "maxApertureAsc": "Max Aperture: Fast to Slow"
+    "focalMinDesc": "Focal Length: Tele to Wide",
+    "maxApertureAsc": "Max Aperture: Fast to Slow",
+    "maxApertureDesc": "Max Aperture: Slow to Fast"
   },
   "card": {
     "focal": "Focal",

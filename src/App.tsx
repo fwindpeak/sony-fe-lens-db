@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import rawLensesData from './data/lenses.json';
-import { Lens, ViewMode } from './types/lens';
+import { Lens, ViewMode, SortField, SortDirection, DEFAULT_SORT_DIRECTIONS } from './types/lens';
 import { useLensFilter } from './hooks/useLensFilter';
 import { useComparison } from './hooks/useComparison';
 import { Header } from './components/Header';
@@ -144,7 +144,10 @@ export const App: React.FC = () => {
             <SortControls
               sortField={sortField}
               sortDirection={sortDirection}
-              onSortFieldChange={setSortField}
+              onSortChange={(field, direction) => {
+                setSortField(field);
+                setSortDirection(direction);
+              }}
               onSortDirectionToggle={() =>
                 setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'))
               }
@@ -175,7 +178,7 @@ export const App: React.FC = () => {
                     setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
                   } else {
                     setSortField(field);
-                    setSortDirection('desc');
+                    setSortDirection(DEFAULT_SORT_DIRECTIONS[field] || 'desc');
                   }
                 }}
                 onOpenDetail={(lens) => setDetailLens(lens)}

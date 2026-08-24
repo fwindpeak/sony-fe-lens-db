@@ -7,14 +7,13 @@ import {
   LayoutGrid,
   Table as TableIcon,
   PanelLeft,
-  SlidersHorizontal,
 } from 'lucide-react';
-import { SortField, SortDirection, ViewMode } from '../types/lens';
+import { SortField, SortDirection, ViewMode, DEFAULT_SORT_DIRECTIONS } from '../types/lens';
 
 interface SortControlsProps {
   sortField: SortField;
   sortDirection: SortDirection;
-  onSortFieldChange: (field: SortField) => void;
+  onSortChange: (field: SortField, direction: SortDirection) => void;
   onSortDirectionToggle: () => void;
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
@@ -27,7 +26,7 @@ interface SortControlsProps {
 export const SortControls: React.FC<SortControlsProps> = ({
   sortField,
   sortDirection,
-  onSortFieldChange,
+  onSortChange,
   onSortDirectionToggle,
   viewMode,
   onViewModeChange,
@@ -38,17 +37,29 @@ export const SortControls: React.FC<SortControlsProps> = ({
 }) => {
   const { t } = useTranslation();
 
-  const sortOptions: { field: SortField; labelKey: string }[] = [
-    { field: 'overallScore', labelKey: 'sort.overallScoreDesc' },
-    { field: 'valueScore', labelKey: 'sort.valueScoreDesc' },
-    { field: 'portabilityScore', labelKey: 'sort.portabilityScoreDesc' },
-    { field: 'sharpnessScore', labelKey: 'sort.sharpnessScoreDesc' },
-    { field: 'priceCny', labelKey: 'sort.priceCnyAsc' },
-    { field: 'weightG', labelKey: 'sort.weightGAsc' },
-    { field: 'releaseDate', labelKey: 'sort.releaseDateDesc' },
-    { field: 'focalMin', labelKey: 'sort.focalMinAsc' },
-    { field: 'maxAperture', labelKey: 'sort.maxApertureAsc' },
+  const sortFieldsList: { field: SortField; defaultDirection: SortDirection }[] = [
+    { field: 'overallScore', defaultDirection: 'desc' },
+    { field: 'valueScore', defaultDirection: 'desc' },
+    { field: 'portabilityScore', defaultDirection: 'desc' },
+    { field: 'sharpnessScore', defaultDirection: 'desc' },
+    { field: 'priceCny', defaultDirection: 'asc' },
+    { field: 'weightG', defaultDirection: 'asc' },
+    { field: 'releaseDate', defaultDirection: 'desc' },
+    { field: 'focalMin', defaultDirection: 'asc' },
+    { field: 'maxAperture', defaultDirection: 'asc' },
   ];
+
+  const getOptionLabel = (field: SortField, defaultDirection: SortDirection) => {
+    const isCurrentField = sortField === field;
+    const direction = isCurrentField ? sortDirection : defaultDirection;
+    const key = `sort.${field}${direction === 'asc' ? 'Asc' : 'Desc'}`;
+    return t(key);
+  };
+
+  const handleSelectField = (newField: SortField) => {
+    const defaultDir = DEFAULT_SORT_DIRECTIONS[newField] || 'desc';
+    onSortChange(newField, defaultDir);
+  };
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-xl p-2.5 sm:p-3 shadow-sm">
@@ -80,12 +91,12 @@ export const SortControls: React.FC<SortControlsProps> = ({
         </div>
         <select
           value={sortField}
-          onChange={(e) => onSortFieldChange(e.target.value as SortField)}
-          className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium rounded-lg px-2.5 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500"
+          onChange={(e) => handleSelectField(e.target.value as SortField)}
+          className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium rounded-lg px-2.5 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500 cursor-pointer"
         >
-          {sortOptions.map((opt) => (
-            <option key={opt.field} value={opt.field}>
-              {t(opt.labelKey)}
+          {sortFieldsList.map((item) => (
+            <option key={item.field} value={item.field}>
+              {getOptionLabel(item.field, item.defaultDirection)}
             </option>
           ))}
         </select>
@@ -93,7 +104,7 @@ export const SortControls: React.FC<SortControlsProps> = ({
         {/* 升降序切换 */}
         <button
           onClick={onSortDirectionToggle}
-          title={sortDirection === 'asc' ? '升序' : '降序'}
+          title={sortDirection === 'asc' ? '当前升序 (点击切换为降序)' : '当前降序 (点击切换为升序)'}
           className="p-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 transition-colors"
         >
           {sortDirection === 'asc' ? (

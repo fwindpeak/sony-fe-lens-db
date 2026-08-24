@@ -310,7 +310,7 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
   if (bZh.includes('Kerlee') || bEn.toLowerCase().includes('kerlee')) return 'https://dzoptics.com/';
 
   // SG-IMAGE 深光影像
-  if (bZh.includes('深光') || bEn.toLowerCase().includes('sg-image')) return 'https://sg-image.com/';
+  if (bZh.includes('深光') || bEn.toLowerCase().includes('sg-image')) return 'https://www.sg-image.com/';
 
   // SONGRUO 松若
   if (bZh.includes('松若') || bEn.toLowerCase().includes('songruo')) return 'https://www.songruophoto.com/';

@@ -78,6 +78,18 @@ export type SortField =
 
 export type SortDirection = 'asc' | 'desc';
 
+export const DEFAULT_SORT_DIRECTIONS: Record<SortField, SortDirection> = {
+  overallScore: 'desc',
+  valueScore: 'desc',
+  portabilityScore: 'desc',
+  sharpnessScore: 'desc',
+  priceCny: 'asc',
+  weightG: 'asc',
+  releaseDate: 'desc',
+  focalMin: 'asc',
+  maxAperture: 'asc',
+};
+
 export interface FilterState {
   search: string;
   brandCategory: BrandCategory;

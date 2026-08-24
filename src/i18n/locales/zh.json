@@ -131,9 +131,13 @@
   "sort": {
     "label": "排序规则",
     "overallScoreDesc": "综合光学总分: 从高到低",
+    "overallScoreAsc": "综合光学总分: 从低到高",
     "valueScoreDesc": "性价比指数: 从高到低",
+    "valueScoreAsc": "性价比指数: 从低到高",
     "portabilityScoreDesc": "轻便便携度: 从高到低",
+    "portabilityScoreAsc": "轻便便携度: 从低到高",
     "sharpnessScoreDesc": "锐度评分: 从高到低",
+    "sharpnessScoreAsc": "锐度评分: 从低到高",
     "priceCnyAsc": "参考价格: 从低到高",
     "priceCnyDesc": "参考价格: 从高到低",
     "weightGAsc": "镜头重量: 从轻到重",
@@ -141,7 +145,9 @@
     "releaseDateDesc": "上市发布时间: 最新",
     "releaseDateAsc": "上市发布时间: 最早",
     "focalMinAsc": "焦距: 广角到长焦",
-    "maxApertureAsc": "最大光圈: 极大到极小"
+    "focalMinDesc": "焦距: 长焦到广角",
+    "maxApertureAsc": "最大光圈: 极大到较小",
+    "maxApertureDesc": "最大光圈: 较小到极大"
   },
   "card": {
     "focal": "焦段",
