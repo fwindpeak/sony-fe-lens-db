@@ -38,7 +38,10 @@
     },
     "footer": {
       "copyright": "Sony FE Lens Database © {{year}} · 纯前端静态驱动 · 收录 480+ 款全画幅 E 卡口镜头",
-      "note": "实验室 MTF 与几何综合标定评分"
+      "note": "实验室 MTF 与几何综合标定评分",
+      "disclaimer": "免责声明：本站所有数据来源于网络公开资料搜集以及 AI 辅助补充修正，参数与评分仅供参考。如有任何错误或遗漏，欢迎指出与反馈修正！",
+      "github": "GitHub 开源仓库",
+      "reportIssue": "反馈纠错 / 提交镜头"
     }
   },
   "presets": {

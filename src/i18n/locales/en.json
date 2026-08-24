@@ -38,7 +38,10 @@
     },
     "footer": {
       "copyright": "Sony FE Lens Database © {{year}} · Pure Client-Side Static Engine · 480+ Full-Frame E-Mount Lenses",
-      "note": "Calibrated Lab MTF & Geometric Optical Ratings"
+      "note": "Calibrated Lab MTF & Geometric Optical Ratings",
+      "disclaimer": "Disclaimer: All data is collected from public web resources and augmented/corrected with AI. Specifications and scores are for reference only. If you spot any inaccuracies or omissions, please report or submit a PR!",
+      "github": "GitHub Repository",
+      "reportIssue": "Report Issue / Contribute"
     }
   },
   "presets": {

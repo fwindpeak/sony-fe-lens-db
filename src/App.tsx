@@ -13,6 +13,7 @@ import { LensGrid } from './components/LensGrid';
 import { LensTable } from './components/LensTable';
 import { LensDetailModal } from './components/LensDetailModal';
 import { ComparisonDrawer } from './components/ComparisonDrawer';
+import { Info, ExternalLink } from 'lucide-react';
 
 const allLenses: Lens[] = rawLensesData as Lens[];
 
@@ -129,13 +130,41 @@ export const App: React.FC = () => {
       </main>
 
       {/* 底部 Footer */}
-      <footer className="mt-auto border-t border-slate-200 dark:border-slate-800/80 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div>
-            {t('app.footer.copyright', { year: new Date().getFullYear() })}
+      <footer className="mt-auto border-t border-slate-200 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/40 py-6 text-xs text-slate-500 dark:text-slate-400">
+        <div className="max-w-7xl mx-auto px-4 space-y-3">
+          {/* 数据免责声明提示框 */}
+          <div className="flex items-start sm:items-center justify-between gap-3 p-3 rounded-xl bg-orange-500/5 dark:bg-orange-500/10 border border-orange-500/20 text-orange-800 dark:text-orange-300">
+            <div className="flex items-center gap-2">
+              <Info className="w-4 h-4 flex-shrink-0 text-orange-500" />
+              <span>{t('app.footer.disclaimer')}</span>
+            </div>
+            <a
+              href="https://github.com/fwindpeak/sony-fe-lens-db/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 font-medium text-orange-600 dark:text-orange-400 hover:underline flex-shrink-0"
+            >
+              <span>{t('app.footer.reportIssue')}</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
           </div>
-          <div className="text-slate-400 dark:text-slate-500">
-            {t('app.footer.note')}
+
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 text-slate-400 dark:text-slate-500">
+            <div>
+              {t('app.footer.copyright', { year: new Date().getFullYear() })}
+            </div>
+            <div className="flex items-center gap-4">
+              <span>{t('app.footer.note')}</span>
+              <span>·</span>
+              <a
+                href="https://github.com/fwindpeak/sony-fe-lens-db"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-orange-500 transition-colors"
+              >
+                {t('app.footer.github')}
+              </a>
+            </div>
           </div>
         </div>
       </footer>

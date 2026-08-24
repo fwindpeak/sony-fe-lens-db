@@ -78,6 +78,17 @@ export const Header: React.FC<HeaderProps> = ({ totalCount }) => {
             {theme === 'light' && <Sun className="w-4 h-4 text-amber-500" />}
             {theme === 'system' && <Monitor className="w-4 h-4 text-blue-400" />}
           </button>
+
+          {/* GitHub 链接 */}
+          <a
+            href="https://github.com/fwindpeak/sony-fe-lens-db"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="GitHub Repository"
+            className="p-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/60 transition-colors"
+          >
+            <Github className="w-4 h-4" />
+          </a>
         </div>
       </div>
     </header>
