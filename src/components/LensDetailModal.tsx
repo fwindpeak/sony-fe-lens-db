@@ -5,6 +5,7 @@ import {
   Sparkles,
   Check,
   Plus,
+  ExternalLink,
 } from 'lucide-react';
 import { Lens } from '../types/lens';
 import { OpticalRadarChart } from './OpticalRadarChart';
@@ -61,13 +62,25 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
         {/* 顶部标题栏 */}
         <div className="flex items-start justify-between p-6 border-b border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-800/30">
           <div>
-            <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex items-center gap-2 mb-1.5 flex-wrap">
               <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
                 {isZh ? lens.brandZh : lens.brandEn}
               </span>
               <span className="text-xs text-slate-400 font-mono">
                 {lens.releaseDate ? t('modal.released', { date: lens.releaseDate }) : ''}
               </span>
+              {lens.officialUrl && (
+                <a
+                  href={lens.officialUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 hover:underline transition-colors"
+                  title={t('modal.viewOfficial')}
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  <span>{t('modal.officialSite')}</span>
+                </a>
+              )}
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-slate-800 dark:text-slate-100 tracking-tight">
               {lens.name}
@@ -187,7 +200,7 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
         </div>
 
         {/* 底部按钮栏 */}
-        <div className="p-4 sm:p-6 border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between">
+        <div className="p-4 sm:p-6 border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-800/30 flex items-center justify-between gap-3">
           <button
             onClick={() => onToggleCompare(lens.id)}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all ${
@@ -200,12 +213,27 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
             <span>{isComparing ? t('modal.inCompare') : t('modal.addToCompare')}</span>
           </button>
 
-          <button
-            onClick={onClose}
-            className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm"
-          >
-            {t('modal.close')}
-          </button>
+          <div className="flex items-center gap-3">
+            {lens.officialUrl && (
+              <a
+                href={lens.officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-semibold bg-orange-500 text-white hover:bg-orange-600 transition-all shadow-md shadow-orange-500/20 group"
+                title={t('modal.viewOfficial')}
+              >
+                <ExternalLink className="w-4 h-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <span>{t('modal.officialSite')}</span>
+              </a>
+            )}
+
+            <button
+              onClick={onClose}
+              className="px-5 py-2.5 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-sm"
+            >
+              {t('modal.close')}
+            </button>
+          </div>
         </div>
       </div>
     </div>

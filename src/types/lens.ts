@@ -56,6 +56,7 @@ export interface Lens {
   lengthMm: number;
   filterThread: string;
   priceCny: number;
+  officialUrl?: string;
   isGM: boolean;
   isG: boolean;
   isZeiss: boolean;
