@@ -243,6 +243,26 @@ export function useLensFilter(allLenses: Lens[]) {
     return { count, avgPrice, avgWeight, avgScore };
   }, [sortedLenses]);
 
+  // 计算当前生效的过滤条件数量
+  const activeFilterCount = useMemo(() => {
+    let cnt = 0;
+    if (filters.search.trim()) cnt++;
+    if (filters.brandCategory !== 'all') cnt++;
+    if (filters.type !== 'all') cnt++;
+    if (filters.focusType !== 'all') cnt++;
+    if (filters.hasOSS !== 'all') cnt++;
+    if (filters.focalCategories.length > 0) cnt += filters.focalCategories.length;
+    if (filters.maxApertureMax < 8.0) cnt++;
+    if (filters.priceMax < 50000) cnt++;
+    if (filters.weightMax < 2500) cnt++;
+    if (filters.overallScoreMin > 0) cnt++;
+    if (filters.isGMOnly) cnt++;
+    if (filters.isGOnly) cnt++;
+    if (filters.isMacroOnly) cnt++;
+    if (filters.filterThread !== 'all') cnt++;
+    return cnt;
+  }, [filters]);
+
   const resetFilters = () => {
     setFilters(initialFilterState);
   };
@@ -266,6 +286,7 @@ export function useLensFilter(allLenses: Lens[]) {
     setSortDirection,
     sortedLenses,
     stats,
+    activeFilterCount,
     resetFilters,
     applyPreset,
     toggleFocalCategory,

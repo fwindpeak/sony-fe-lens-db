@@ -59,6 +59,10 @@
   "filters": {
     "title": "Filters",
     "filterBtn": "Filters",
+    "collapse": "Collapse Filters",
+    "expand": "Show Filters",
+    "toggle": "Filters",
+    "activeCount": "{{count}} active",
     "brand": "Brand / Manufacturer",
     "brands": {
       "all": "All Brands",

@@ -26,17 +26,17 @@ export const LensTable: React.FC<LensTableProps> = ({
   const { t, i18n } = useTranslation();
   const isZh = i18n.language.startsWith('zh');
 
-  const renderSortHeader = (label: string, field: SortField) => {
+  const renderSortHeader = (label: string, field: SortField, className = '') => {
     const isActive = sortField === field;
     return (
       <th
         onClick={() => onSort(field)}
-        className="py-3 px-3 text-left text-xs font-semibold text-slate-600 dark:text-slate-300 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors select-none"
+        className={`sticky top-0 z-20 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80 py-3.5 px-3 text-left text-xs font-bold text-slate-700 dark:text-slate-200 cursor-pointer hover:bg-slate-200/80 dark:hover:bg-slate-700/60 transition-colors select-none whitespace-nowrap ${className}`}
       >
         <div className="flex items-center gap-1">
           <span>{label}</span>
           <ArrowUpDown
-            className={`w-3 h-3 ${
+            className={`w-3.5 h-3.5 ${
               isActive ? 'text-orange-500 font-bold' : 'text-slate-400 opacity-50'
             }`}
           />
@@ -45,18 +45,26 @@ export const LensTable: React.FC<LensTableProps> = ({
     );
   };
 
+  if (lenses.length === 0) {
+    return (
+      <div className="w-full py-16 px-4 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl text-center text-slate-500 dark:text-slate-400">
+        <p className="text-sm">{t('app.empty.title')}</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-full overflow-x-auto bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl shadow-sm">
+    <div className="w-full max-h-[calc(100vh-13rem)] min-h-[480px] overflow-auto bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl shadow-sm relative">
       <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40">
-            <th className="py-3 px-3 text-xs font-semibold text-slate-500 w-12 text-center">
+        <thead className="sticky top-0 z-20">
+          <tr className="border-b border-slate-200 dark:border-slate-700/80 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md shadow-sm">
+            <th className="sticky top-0 z-20 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80 py-3.5 px-3 text-xs font-bold text-slate-500 w-12 text-center">
               #
             </th>
-            <th className="py-3 px-3 text-xs font-semibold text-slate-600 dark:text-slate-300 min-w-[200px]">
+            <th className="sticky top-0 z-20 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80 py-3.5 px-3 text-xs font-bold text-slate-700 dark:text-slate-200 min-w-[220px]">
               {t('table.name')}
             </th>
-            <th className="py-3 px-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
+            <th className="sticky top-0 z-20 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80 py-3.5 px-3 text-xs font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">
               {t('table.brand')}
             </th>
             {renderSortHeader(t('table.overall'), 'overallScore')}
@@ -65,17 +73,17 @@ export const LensTable: React.FC<LensTableProps> = ({
             {renderSortHeader(t('table.focal'), 'focalMin')}
             {renderSortHeader(t('table.aperture'), 'maxAperture')}
             {renderSortHeader(t('table.weight'), 'weightG')}
-            <th className="py-3 px-3 text-xs font-semibold text-slate-600 dark:text-slate-300">
+            <th className="sticky top-0 z-20 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80 py-3.5 px-3 text-xs font-bold text-slate-700 dark:text-slate-200 whitespace-nowrap">
               {t('table.filter')}
             </th>
             {renderSortHeader(t('table.price'), 'priceCny')}
             {renderSortHeader(t('table.release'), 'releaseDate')}
-            <th className="py-3 px-3 text-xs font-semibold text-slate-600 dark:text-slate-300 text-center">
+            <th className="sticky top-0 z-20 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80 py-3.5 px-3 text-xs font-bold text-slate-700 dark:text-slate-200 text-center whitespace-nowrap">
               {t('table.action')}
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
+        <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 text-xs">
           {lenses.map((lens, idx) => {
             const scoreStyle = getScoreColor(lens.overallScore);
             const inCompare = isComparing(lens.id);
@@ -84,7 +92,7 @@ export const LensTable: React.FC<LensTableProps> = ({
               <tr
                 key={lens.id}
                 onClick={() => onOpenDetail(lens)}
-                className="hover:bg-orange-500/5 dark:hover:bg-slate-800/50 cursor-pointer transition-colors"
+                className="hover:bg-orange-500/5 dark:hover:bg-slate-800/60 cursor-pointer transition-colors"
               >
                 <td className="py-3 px-3 text-center text-slate-400 font-mono">
                   {idx + 1}
@@ -92,12 +100,12 @@ export const LensTable: React.FC<LensTableProps> = ({
                 <td className="py-3 px-3 font-semibold text-slate-800 dark:text-slate-200">
                   <div className="flex items-center gap-1.5">
                     {lens.isGM && (
-                      <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-red-600 text-white">
+                      <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-red-600 text-white shrink-0">
                         GM
                       </span>
                     )}
                     {lens.isG && (
-                      <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-amber-500 text-black">
+                      <span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-amber-500 text-black shrink-0">
                         G
                       </span>
                     )}
@@ -106,41 +114,41 @@ export const LensTable: React.FC<LensTableProps> = ({
                     </span>
                   </div>
                 </td>
-                <td className="py-3 px-3 text-slate-600 dark:text-slate-400">
+                <td className="py-3 px-3 text-slate-600 dark:text-slate-400 whitespace-nowrap">
                   {isZh ? lens.brandZh.split(' ')[0] : lens.brandEn}
                 </td>
-                <td className="py-3 px-3 font-mono font-bold">
+                <td className="py-3 px-3 font-mono font-bold whitespace-nowrap">
                   <span className={`px-2 py-0.5 rounded ${scoreStyle.bg} ${scoreStyle.text}`}>
                     {lens.overallScore.toFixed(1)}
                   </span>
                 </td>
-                <td className="py-3 px-3 font-mono text-amber-500 font-bold">
+                <td className="py-3 px-3 font-mono text-amber-500 font-bold whitespace-nowrap">
                   {lens.sharpnessStar}
                 </td>
-                <td className="py-3 px-3 font-mono text-slate-700 dark:text-slate-300">
+                <td className="py-3 px-3 font-mono text-slate-700 dark:text-slate-300 whitespace-nowrap">
                   {lens.valueScore}
                 </td>
-                <td className="py-3 px-3 font-mono text-slate-700 dark:text-slate-300">
+                <td className="py-3 px-3 font-mono text-slate-700 dark:text-slate-300 whitespace-nowrap">
                   {lens.focalDesc}
                 </td>
-                <td className="py-3 px-3 font-mono text-orange-600 dark:text-orange-400 font-semibold">
+                <td className="py-3 px-3 font-mono text-orange-600 dark:text-orange-400 font-semibold whitespace-nowrap">
                   {lens.apertureDesc}
                 </td>
-                <td className="py-3 px-3 font-mono text-slate-700 dark:text-slate-300">
+                <td className="py-3 px-3 font-mono text-slate-700 dark:text-slate-300 whitespace-nowrap">
                   {formatWeight(lens.weightG)}
                 </td>
-                <td className="py-3 px-3 font-mono text-slate-500">
+                <td className="py-3 px-3 font-mono text-slate-500 whitespace-nowrap">
                   {lens.filterThread && lens.filterThread !== '-'
                     ? `Φ${lens.filterThread}`
                     : '-'}
                 </td>
-                <td className="py-3 px-3 font-mono font-bold text-orange-600 dark:text-orange-400">
+                <td className="py-3 px-3 font-mono font-bold text-orange-600 dark:text-orange-400 whitespace-nowrap">
                   {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : '待定'}
                 </td>
-                <td className="py-3 px-3 font-mono text-slate-400">
+                <td className="py-3 px-3 font-mono text-slate-400 whitespace-nowrap">
                   {lens.releaseDate || '-'}
                 </td>
-                <td className="py-3 px-3 text-center" onClick={(e) => e.stopPropagation()}>
+                <td className="py-3 px-3 text-center whitespace-nowrap" onClick={(e) => e.stopPropagation()}>
                   <div className="flex items-center justify-center gap-1">
                     <button
                       onClick={() => onOpenDetail(lens)}

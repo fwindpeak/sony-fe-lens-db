@@ -5,7 +5,9 @@ export type ThemeMode = 'light' | 'dark' | 'system';
 export function useTheme() {
   const [theme, setTheme] = useState<ThemeMode>(() => {
     const saved = localStorage.getItem('sony_lens_db_theme') as ThemeMode;
-    return saved || 'dark'; // 默认偏向摄影暗色质感，也可切换亮色
+    if (saved) return saved;
+    // 默认跟随系统偏好；如果用户浏览器是亮色，优先进入亮色模式
+    return 'system';
   });
 
   useEffect(() => {

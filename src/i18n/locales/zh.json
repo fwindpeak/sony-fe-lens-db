@@ -59,6 +59,10 @@
   "filters": {
     "title": "多维条件筛选",
     "filterBtn": "筛选",
+    "collapse": "收起筛选",
+    "expand": "展开筛选",
+    "toggle": "多维筛选",
+    "activeCount": "{{count}} 项过滤中",
     "brand": "品牌厂商",
     "brands": {
       "all": "全部品牌",

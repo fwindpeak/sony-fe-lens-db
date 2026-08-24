@@ -22,6 +22,17 @@ export const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [detailLens, setDetailLens] = useState<Lens | null>(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
+    return localStorage.getItem('sony_lens_db_sidebar_collapsed') === 'true';
+  });
+
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed((prev) => {
+      const next = !prev;
+      localStorage.setItem('sony_lens_db_sidebar_collapsed', String(next));
+      return next;
+    });
+  };
 
   const {
     filters,
@@ -32,6 +43,7 @@ export const App: React.FC = () => {
     setSortDirection,
     sortedLenses,
     stats,
+    activeFilterCount,
     resetFilters,
     applyPreset,
     toggleFocalCategory,
@@ -53,7 +65,7 @@ export const App: React.FC = () => {
       <Header totalCount={allLenses.length} />
 
       {/* 主体区域 */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="flex-1 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* 顶部一键场景推荐栏 */}
         <QuickPresets
           activePreset={filters.preset}
@@ -73,12 +85,14 @@ export const App: React.FC = () => {
 
         {/* 下方双栏布局：左侧筛选器 + 右侧展示区 */}
         <div className="flex gap-6 items-start">
-          {/* 左侧筛选侧边栏 (PC 端固定，移动端抽屉) */}
+          {/* 左侧筛选侧边栏 (PC 端固定/可收起，移动端抽屉) */}
           <FilterSidebar
             filters={filters}
             onFilterChange={setFilters}
             onReset={resetFilters}
             onToggleFocalCategory={toggleFocalCategory}
+            isCollapsed={isSidebarCollapsed}
+            onToggleCollapse={toggleSidebar}
             isMobileOpen={isMobileFilterOpen}
             onMobileClose={() => setIsMobileFilterOpen(false)}
           />
@@ -96,6 +110,9 @@ export const App: React.FC = () => {
               viewMode={viewMode}
               onViewModeChange={setViewMode}
               count={sortedLenses.length}
+              isSidebarCollapsed={isSidebarCollapsed}
+              onToggleSidebar={toggleSidebar}
+              activeFilterCount={activeFilterCount}
             />
 
             {/* 镜头列表展示：卡片网格 vs 数据表格 */}
@@ -131,7 +148,7 @@ export const App: React.FC = () => {
 
       {/* 底部 Footer */}
       <footer className="mt-auto border-t border-slate-200 dark:border-slate-800/80 bg-white/50 dark:bg-slate-900/40 py-6 text-xs text-slate-500 dark:text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 space-y-3">
+        <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 space-y-3">
           {/* 数据免责声明提示框 */}
           <div className="flex items-start sm:items-center justify-between gap-3 p-3 rounded-xl bg-orange-500/5 dark:bg-orange-500/10 border border-orange-500/20 text-orange-800 dark:text-orange-300">
             <div className="flex items-center gap-2">

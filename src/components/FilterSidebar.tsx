@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Filter, RotateCcw, X, Shield, DollarSign, Weight, Star } from 'lucide-react';
+import { Filter, RotateCcw, X, Shield, DollarSign, Weight, Star, PanelLeftClose } from 'lucide-react';
 import { FilterState, BrandCategory, FocalCategory } from '../types/lens';
 
 interface FilterSidebarProps {
@@ -8,6 +8,8 @@ interface FilterSidebarProps {
   onFilterChange: (filters: FilterState) => void;
   onReset: () => void;
   onToggleFocalCategory: (cat: FocalCategory) => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
   isMobileOpen?: boolean;
   onMobileClose?: () => void;
 }
@@ -43,6 +45,8 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   onFilterChange,
   onReset,
   onToggleFocalCategory,
+  isCollapsed = false,
+  onToggleCollapse,
   isMobileOpen = false,
   onMobileClose,
 }) => {
@@ -50,19 +54,30 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
   const content = (
     <div className="space-y-6 pb-6 select-none">
-      {/* 顶部标题与重置按钮 */}
+      {/* 顶部标题、收起与重置按钮 */}
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-2 font-bold text-base text-slate-800 dark:text-slate-100">
           <Filter className="w-4 h-4 text-orange-500" />
           <span>{t('filters.title')}</span>
         </div>
-        <button
-          onClick={onReset}
-          className="flex items-center gap-1 text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 font-medium transition-colors"
-        >
-          <RotateCcw className="w-3.5 h-3.5" />
-          <span>{t('app.resetAll')}</span>
-        </button>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={onReset}
+            className="flex items-center gap-1 text-xs text-orange-600 dark:text-orange-400 hover:text-orange-700 font-medium px-1.5 py-1 rounded-md hover:bg-orange-500/10 transition-colors"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>{t('app.resetAll')}</span>
+          </button>
+          {onToggleCollapse && (
+            <button
+              onClick={onToggleCollapse}
+              title={t('filters.collapse')}
+              className="hidden lg:flex items-center justify-center p-1 rounded-md text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ml-1"
+            >
+              <PanelLeftClose className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* 1. 品牌厂商 */}
@@ -411,9 +426,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   return (
     <>
       {/* PC 桌面端侧边栏 */}
-      <aside className="hidden lg:block w-72 shrink-0 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-5 shadow-sm sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain">
-        {content}
-      </aside>
+      {!isCollapsed && (
+        <aside className="hidden lg:block w-72 shrink-0 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-5 shadow-sm sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain transition-all duration-300">
+          {content}
+        </aside>
+      )}
 
       {/* 移动端抽屉 (Drawer) */}
       {isMobileOpen && (
