@@ -15,6 +15,8 @@ const initialFilterState: FilterState = {
   focusType: 'all',
   hasOSS: 'all',
   focalCategories: [],
+  focalLengthMin: 9,
+  focalLengthMax: 800,
   maxApertureMin: 0.95,
   maxApertureMax: 8.0,
   priceMin: 0,
@@ -102,15 +104,21 @@ export function useLensFilter(allLenses: Lens[]) {
       const rawQ = filters.search.trim();
       const lowerQ = rawQ.toLowerCase();
       const cleanQ = lowerQ.replace(/mm$/i, '').replace(/^f/i, '').trim();
+      const noSpaceQ = lowerQ.replace(/[\s\-_/]/g, '');
 
-      // 中英文/数字边界智能分词: 如 "适马20-200" => "适马 20-200", "索尼24-70" => "索尼 24-70"
+      // 提取纯焦段数字 (如 "85", "85mm", "85 mm")
+      const pureFocalMatch = lowerQ.match(/^([0-9]{2,3})\s*(mm)?$/i);
+      // 提取变焦区间 (如 "24-70", "70-200", "24-70mm")
+      const zoomFocalMatch = lowerQ.match(/^([0-9]{2,3})\s*[-~至到/]\s*([0-9]{2,3})\s*(mm)?$/i);
+
+      // 中英文/数字边界智能分词: 如 "适马85" => "适马 85", "85mm1.4" => "85mm 1.4"
       const expandedQ = rawQ
         .replace(/([\u4e00-\u9fa5]+)([0-9a-zA-Z])/g, '$1 $2')
         .replace(/([0-9a-zA-Z])([\u4e00-\u9fa5]+)/g, '$1 $2')
+        .replace(/[/_]/g, ' ')
         .toLowerCase();
 
       const tokens = expandedQ.split(/\s+/).filter(Boolean);
-      const noSpaceQ = lowerQ.replace(/\s+/g, '');
 
       // 基于全库进行精准度与语义打分
       for (const lens of allLenses) {
@@ -119,52 +127,67 @@ export function useLensFilter(allLenses: Lens[]) {
         const bEn = (lens.brandEn || '').toLowerCase();
         const name = (lens.name || '').toLowerCase();
         const focalDesc = (lens.focalDesc || '').toLowerCase();
-        const apertureDesc = (lens.apertureDesc || '').toLowerCase();
         const cleanFocal = focalDesc.replace('mm', '').trim();
+        const apertureDesc = (lens.apertureDesc || '').toLowerCase();
 
         const fullCombined = `${bZh} ${bEn} ${name} ${focalDesc} ${apertureDesc} ${bZh}${name} ${bEn}${name} ${bZh}${focalDesc}`.toLowerCase();
-        const noSpaceFull = fullCombined.replace(/\s+/g, '');
+        const noSpaceFull = fullCombined.replace(/[\s\-_/]/g, '');
 
-        // 1. 焦段精准匹配 (如搜索 "20-200" 完美命中 20-200mm)
-        if (cleanFocal === cleanQ || focalDesc === lowerQ) {
-          score += 3000;
-        } else if (cleanFocal.startsWith(cleanQ + '-') || cleanFocal.endsWith('-' + cleanQ)) {
-          score += 300;
+        // 1. 纯数字焦段查询 (如 "85" 或 "85mm")
+        if (pureFocalMatch) {
+          const targetF = parseInt(pureFocalMatch[1], 10);
+          if (lens.focalMin === targetF && lens.focalMax === targetF) {
+            score += 5000 + lens.overallScore; // 85定焦头独得超高分，排在最前面
+          } else if (lens.focalMin <= targetF && lens.focalMax >= targetF) {
+            score += 800 + lens.overallScore; // 覆盖该焦段的变焦头
+          }
+        } else if (zoomFocalMatch) {
+          const minF = parseInt(zoomFocalMatch[1], 10);
+          const maxF = parseInt(zoomFocalMatch[2], 10);
+          if (lens.focalMin === minF && lens.focalMax === maxF) {
+            score += 6000 + lens.overallScore; // 变焦区间完全吻合
+          } else if (lens.focalMin <= minF && lens.focalMax >= maxF) {
+            score += 1000 + lens.overallScore;
+          }
         }
 
-        // 2. 去空格整串直接包含 (如 "适马20-200" 完美匹配 "适马20-200mm...")
+        // 2. 整串直接包含 (如 "适马85", "85 1.4", "FE 85")
         if (noSpaceFull.includes(noSpaceQ)) {
-          score += 1500;
+          score += 2000;
           if (noSpaceFull.startsWith(noSpaceQ)) {
             score += 500;
           }
         }
 
-        // 3. 多分词联合命中
+        // 3. 多分词联合命中 (如 "适马 85 1.4")
         let allTokensMatch = true;
         let matchedCount = 0;
 
         for (const token of tokens) {
           const cleanToken = token.replace(/mm$/i, '').replace(/^f/i, '');
-          const isFocalMatch = cleanFocal === cleanToken || focalDesc === token || focalDesc.includes(token);
+          const numToken = parseInt(cleanToken, 10);
+          const isFocalToken =
+            cleanFocal === cleanToken ||
+            focalDesc === token ||
+            (numToken > 0 && lens.focalMin <= numToken && lens.focalMax >= numToken);
           const isBrandMatch = bZh.includes(token) || bEn.includes(token);
-          const isNameMatch = name.includes(token);
-          const isApertureMatch = apertureDesc.toLowerCase().includes(token);
+          const isNameMatch = name.includes(token) || (cleanToken && name.includes(cleanToken));
+          const isApertureMatch = apertureDesc.includes(token) || (cleanToken && apertureDesc.includes(cleanToken));
           const isFullMatch = fullCombined.includes(token) || (cleanToken && fullCombined.includes(cleanToken));
 
-          if (isFocalMatch || isBrandMatch || isNameMatch || isApertureMatch || isFullMatch) {
+          if (isFocalToken || isBrandMatch || isNameMatch || isApertureMatch || isFullMatch) {
             matchedCount++;
-            score += 200;
-            if (cleanFocal === cleanToken) score += 800; // 焦段完全一致大加分
-            if (isBrandMatch) score += 400; // 品牌匹配加分
-            if (isApertureMatch) score += 300; // 光圈匹配加分
+            score += 300;
+            if (cleanFocal === cleanToken) score += 1000;
+            if (isBrandMatch) score += 500;
+            if (isApertureMatch) score += 300;
           } else {
             allTokensMatch = false;
           }
         }
 
         if (allTokensMatch && tokens.length > 1) {
-          score += 800;
+          score += 1200;
         }
 
         if (score > 0 && (allTokensMatch || matchedCount === tokens.length || noSpaceFull.includes(noSpaceQ))) {
@@ -229,6 +252,15 @@ export function useLensFilter(allLenses: Lens[]) {
     if (filters.focalCategories.length > 0) {
       result = result.filter((lens) =>
         lens.focalCategory.some((cat) => filters.focalCategories.includes(cat))
+      );
+    }
+
+    // 8. 精确焦段范围 (滑块)
+    if (filters.focalLengthMin > 9 || filters.focalLengthMax < 800) {
+      result = result.filter(
+        (lens) =>
+          lens.focalMax >= filters.focalLengthMin &&
+          lens.focalMin <= filters.focalLengthMax
       );
     }
 
@@ -342,6 +374,7 @@ export function useLensFilter(allLenses: Lens[]) {
     if (filters.focusType !== 'all') cnt++;
     if (filters.hasOSS !== 'all') cnt++;
     if (filters.focalCategories.length > 0) cnt += filters.focalCategories.length;
+    if (filters.focalLengthMin > 9 || filters.focalLengthMax < 800) cnt++;
     if (filters.maxApertureMax < 8.0) cnt++;
     if (filters.priceMax < 50000) cnt++;
     if (filters.weightMax < 2500) cnt++;

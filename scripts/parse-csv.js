@@ -141,25 +141,26 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
 
   // TAMRON 腾龙
   if (brandCategory === 'tamron') {
-    if (n.includes('20mm f2.8') || n.includes('f050')) return 'https://www.tamron.com.cn/consumer/lenses/f050/';
-    if (n.includes('24mm f2.8') || n.includes('f051')) return 'https://www.tamron.com.cn/consumer/lenses/f051/';
-    if (n.includes('35mm f2.8') || n.includes('f053')) return 'https://www.tamron.com.cn/consumer/lenses/f053/';
-    if (n.includes('90mm f2.8') || n.includes('f072')) return 'https://www.tamron.com.cn/consumer/lenses/f072/';
-    if (n.includes('17-28mm') || n.includes('a046')) return 'https://www.tamron.com.cn/consumer/lenses/a046/';
-    if (n.includes('17-50mm') || n.includes('a068')) return 'https://www.tamron.com.cn/consumer/lenses/a068/';
-    if (n.includes('20-40mm') || n.includes('a062')) return 'https://www.tamron.com.cn/consumer/lenses/a062/';
-    if (n.includes('28-75mm') && (n.includes('g2') || n.includes('a063'))) return 'https://www.tamron.com.cn/consumer/lenses/a063/';
-    if (n.includes('28-75mm') || n.includes('a036')) return 'https://www.tamron.com.cn/consumer/lenses/a036/';
-    if (n.includes('28-200mm') || n.includes('a071')) return 'https://www.tamron.com.cn/consumer/lenses/a071/';
-    if (n.includes('28-300mm') || n.includes('a074')) return 'https://www.tamron.com.cn/consumer/lenses/a074/';
-    if (n.includes('35-150mm') || n.includes('a058')) return 'https://www.tamron.com.cn/consumer/lenses/a058/';
-    if (n.includes('50-300mm') || n.includes('a069')) return 'https://www.tamron.com.cn/consumer/lenses/a069/';
-    if (n.includes('50-400mm') || n.includes('a067')) return 'https://www.tamron.com.cn/consumer/lenses/a067/';
-    if (n.includes('70-180mm') && (n.includes('g2') || n.includes('a065'))) return 'https://www.tamron.com.cn/consumer/lenses/a065/';
-    if (n.includes('70-180mm') || n.includes('a056')) return 'https://www.tamron.com.cn/consumer/lenses/a056/';
-    if (n.includes('70-300mm') || n.includes('a047')) return 'https://www.tamron.com.cn/consumer/lenses/a047/';
-    if (n.includes('150-500mm') || n.includes('a057')) return 'https://www.tamron.com.cn/consumer/lenses/a057/';
-    return 'https://www.tamron.com.cn/consumer/lenses/';
+    if (n.includes('20mm f2.8') || n.includes('f050')) return 'https://www.tamron.com/global/consumer/lenses/f050/';
+    if (n.includes('24mm f2.8') || n.includes('f051')) return 'https://www.tamron.com/global/consumer/lenses/f051/';
+    if (n.includes('35mm f2.8') || n.includes('f053')) return 'https://www.tamron.com/global/consumer/lenses/f053/';
+    if (n.includes('90mm f2.8') || n.includes('f072')) return 'https://www.tamron.com/global/consumer/lenses/f072/';
+    if (n.includes('17-28mm') || n.includes('a046')) return 'https://www.tamron.com/global/consumer/lenses/a046/';
+    if (n.includes('17-50mm') || n.includes('a068')) return 'https://www.tamron.com/global/consumer/lenses/a068/';
+    if (n.includes('20-40mm') || n.includes('a062')) return 'https://www.tamron.com/global/consumer/lenses/a062/';
+    if (n.includes('28-75mm') && (n.includes('g2') || n.includes('a063'))) return 'https://www.tamron.com/global/consumer/lenses/a063/';
+    if (n.includes('28-75mm') || n.includes('a036')) return 'https://www.tamron.com/global/consumer/lenses/a036/';
+    if (n.includes('28-200mm') || n.includes('a071')) return 'https://www.tamron.com/global/consumer/lenses/a071/';
+    if (n.includes('28-300mm') || n.includes('a074')) return 'https://www.tamron.com/global/consumer/lenses/a074/';
+    if (n.includes('35-150mm') || n.includes('a058')) return 'https://www.tamron.com/global/consumer/lenses/a058/';
+    if (n.includes('50-300mm') || n.includes('a069')) return 'https://www.tamron.com/global/consumer/lenses/a069/';
+    if (n.includes('50-400mm') || n.includes('a067')) return 'https://www.tamron.com/global/consumer/lenses/a067/';
+    if (n.includes('70-180mm') && (n.includes('g2') || n.includes('a065'))) return 'https://www.tamron.com/global/consumer/lenses/a065/';
+    if (n.includes('70-180mm') || n.includes('a056')) return 'https://www.tamron.com/global/consumer/lenses/a056/';
+    if (n.includes('70-300mm') || n.includes('a047')) return 'https://www.tamron.com/global/consumer/lenses/a047/';
+    if (n.includes('150-500mm') || n.includes('a057')) return 'https://www.tamron.com/global/consumer/lenses/a057/';
+    if (n.includes('25-200mm') || n.includes('a075')) return 'https://www.tamron.com/global/consumer/lenses/a075/';
+    return 'https://www.tamron.com/global/consumer/lenses/';
   }
 
   // ZEISS 蔡司

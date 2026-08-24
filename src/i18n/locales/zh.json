@@ -97,7 +97,12 @@
       "yes": "支持防抖",
       "no": "无防抖"
     },
-    "focalLength": "焦段区间",
+    "focalLength": "焦段分类",
+    "exactFocalSlider": "精确焦段区间 (mm)",
+    "focalMin": "最短",
+    "focalMax": "最长",
+    "quickFocal": "常用焦段直达",
+    "focalUnlimited": "不限",
     "focalRanges": {
       "ultraWide": "超广角",
       "wide": "广角",

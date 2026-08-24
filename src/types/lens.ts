@@ -85,6 +85,8 @@ export interface FilterState {
   focusType: 'all' | 'af' | 'mf';
   hasOSS: 'all' | 'yes' | 'no';
   focalCategories: FocalCategory[];
+  focalLengthMin: number;
+  focalLengthMax: number;
   maxApertureMin: number;
   maxApertureMax: number;
   priceMin: number;

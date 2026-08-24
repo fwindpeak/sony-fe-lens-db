@@ -97,7 +97,12 @@
       "yes": "Stabilized",
       "no": "Non-Stabilized"
     },
-    "focalLength": "Focal Range",
+    "focalLength": "Focal Category",
+    "exactFocalSlider": "Exact Focal Range (mm)",
+    "focalMin": "Min",
+    "focalMax": "Max",
+    "quickFocal": "Quick Focal Lengths",
+    "focalUnlimited": "Any",
     "focalRanges": {
       "ultraWide": "Ultra-Wide",
       "wide": "Wide",
