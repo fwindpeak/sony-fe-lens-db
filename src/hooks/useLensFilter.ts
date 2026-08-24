@@ -41,6 +41,7 @@ export function useLensFilter(allLenses: Lens[]) {
     return new Fuse(allLenses, {
       keys: [
         { name: 'name', weight: 0.4 },
+        { name: 'officialUrl', weight: 0.35 },
         { name: 'brandZh', weight: 0.25 },
         { name: 'brandEn', weight: 0.25 },
         { name: 'focalDesc', weight: 0.35 },
@@ -123,6 +124,7 @@ export function useLensFilter(allLenses: Lens[]) {
       // 基于全库进行精准度与语义打分
       for (const lens of allLenses) {
         let score = 0;
+        const urlModelCode = (lens.officialUrl || '').split('/').filter(Boolean).pop()?.replace(/\.html$/i, '').toLowerCase() || '';
         const bZh = (lens.brandZh || '').toLowerCase();
         const bEn = (lens.brandEn || '').toLowerCase();
         const name = (lens.name || '').toLowerCase();
@@ -130,10 +132,17 @@ export function useLensFilter(allLenses: Lens[]) {
         const cleanFocal = focalDesc.replace('mm', '').trim();
         const apertureDesc = (lens.apertureDesc || '').toLowerCase();
 
-        const fullCombined = `${bZh} ${bEn} ${name} ${focalDesc} ${apertureDesc} ${bZh}${name} ${bEn}${name} ${bZh}${focalDesc}`.toLowerCase();
+        const fullCombined = `${bZh} ${bEn} ${name} ${focalDesc} ${apertureDesc} ${urlModelCode} ${lens.officialUrl || ''}`.toLowerCase();
         const noSpaceFull = fullCombined.replace(/[\s\-_/]/g, '');
 
-        // 1. 纯数字焦段查询 (如 "85" 或 "85mm")
+        // 1. 官方型号代码精准匹配 (如 "sel35f18f", "sel2470gm2", "a063", "f050", "sel85f14gm")
+        if (urlModelCode && (urlModelCode === noSpaceQ || urlModelCode === lowerQ)) {
+          score += 10000 + lens.overallScore;
+        } else if (urlModelCode && (urlModelCode.includes(noSpaceQ) || (noSpaceQ.length >= 4 && noSpaceQ.includes(urlModelCode)))) {
+          score += 6000 + lens.overallScore;
+        }
+
+        // 2. 纯数字焦段查询 (如 "85" 或 "85mm")
         if (pureFocalMatch) {
           const targetF = parseInt(pureFocalMatch[1], 10);
           if (lens.focalMin === targetF && lens.focalMax === targetF) {
@@ -151,7 +160,7 @@ export function useLensFilter(allLenses: Lens[]) {
           }
         }
 
-        // 2. 整串直接包含 (如 "适马85", "85 1.4", "FE 85")
+        // 3. 整串直接包含 (如 "适马85", "85 1.4", "FE 85", "sel35")
         if (noSpaceFull.includes(noSpaceQ)) {
           score += 2000;
           if (noSpaceFull.startsWith(noSpaceQ)) {
@@ -159,7 +168,7 @@ export function useLensFilter(allLenses: Lens[]) {
           }
         }
 
-        // 3. 多分词联合命中 (如 "适马 85 1.4")
+        // 4. 多分词联合命中 (如 "适马 85 1.4", "sel 35 1.8", "sel 50 1.2")
         let allTokensMatch = true;
         let matchedCount = 0;
 
@@ -170,16 +179,21 @@ export function useLensFilter(allLenses: Lens[]) {
             cleanFocal === cleanToken ||
             focalDesc === token ||
             (numToken > 0 && lens.focalMin <= numToken && lens.focalMax >= numToken);
-          const isBrandMatch = bZh.includes(token) || bEn.includes(token);
+          const isBrandMatch =
+            bZh.includes(token) ||
+            bEn.includes(token) ||
+            ((token === 'sel' || token === 'fe') && (lens.brandCategory === 'sony' || bZh.includes('索尼')));
           const isNameMatch = name.includes(token) || (cleanToken && name.includes(cleanToken));
           const isApertureMatch = apertureDesc.includes(token) || (cleanToken && apertureDesc.includes(cleanToken));
+          const isModelMatch = urlModelCode.includes(token) || (cleanToken && urlModelCode.includes(cleanToken));
           const isFullMatch = fullCombined.includes(token) || (cleanToken && fullCombined.includes(cleanToken));
 
-          if (isFocalToken || isBrandMatch || isNameMatch || isApertureMatch || isFullMatch) {
+          if (isFocalToken || isBrandMatch || isNameMatch || isApertureMatch || isModelMatch || isFullMatch) {
             matchedCount++;
             score += 300;
             if (cleanFocal === cleanToken) score += 1000;
             if (isBrandMatch) score += 500;
+            if (isModelMatch) score += 800;
             if (isApertureMatch) score += 300;
           } else {
             allTokensMatch = false;

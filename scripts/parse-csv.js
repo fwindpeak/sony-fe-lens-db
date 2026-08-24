@@ -41,66 +41,66 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
 
   // SONY 原厂
   if (brandCategory === 'sony') {
-    if (n.includes('14mm f1.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel14f18gm.html';
-    if (n.includes('24mm f1.4 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel24f14gm.html';
-    if (n.includes('35mm f1.4 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel35f14gm.html';
-    if (n.includes('50mm f1.2 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel50f12gm.html';
-    if (n.includes('50mm f1.4 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel50f14gm.html';
-    if (n.includes('85mm f1.4 gm ii')) return 'https://www.sony.com.cn/products/di/lens/fe/sel85f14gm2.html';
-    if (n.includes('85mm f1.4 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel85f14gm.html';
-    if (n.includes('100mm f2.8 stf gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel100f28gm.html';
-    if (n.includes('135mm f1.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel135f18gm.html';
-    if (n.includes('300mm f2.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel300f28gm.html';
-    if (n.includes('400mm f2.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel400f28gm.html';
-    if (n.includes('600mm f4 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel600f40gm.html';
-    if (n.includes('12-24mm f2.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel1224gm.html';
-    if (n.includes('16-35mm f2.8 gm ii')) return 'https://www.sony.com.cn/products/di/lens/fe/sel1635gm2.html';
-    if (n.includes('16-35mm f2.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel1635gm.html';
-    if (n.includes('24-70mm f2.8 gm ii')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2470gm2.html';
-    if (n.includes('24-70mm f2.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2470gm.html';
-    if (n.includes('28-70mm f2.0 gm') || n.includes('28-70mm f2 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2870gm.html';
-    if (n.includes('70-200mm f2.8 gm ii') || n.includes('70-200mm f2.8 gm oss ii')) return 'https://www.sony.com.cn/products/di/lens/fe/sel70200gm2.html';
-    if (n.includes('70-200mm f2.8 gm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel70200gm.html';
-    if (n.includes('100-400mm f4.5-5.6 gm') || n.includes('100-400mm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel100400gm.html';
+    if (n.includes('14mm f1.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel14f18gm';
+    if (n.includes('24mm f1.4 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel24f14gm';
+    if (n.includes('35mm f1.4 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel35f14gm';
+    if (n.includes('50mm f1.2 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel50f12gm';
+    if (n.includes('50mm f1.4 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel50f14gm';
+    if (n.includes('85mm f1.4 gm ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel85f14gm2';
+    if (n.includes('85mm f1.4 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel85f14gm';
+    if (n.includes('100mm f2.8 stf gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100f28gm';
+    if (n.includes('135mm f1.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel135f18gm';
+    if (n.includes('300mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel300f28gm';
+    if (n.includes('400mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel400f28gm';
+    if (n.includes('600mm f4 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel600f40gm';
+    if (n.includes('12-24mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel1224gm';
+    if (n.includes('16-35mm f2.8 gm ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel1635gm2';
+    if (n.includes('16-35mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel1635gm';
+    if (n.includes('24-70mm f2.8 gm ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2470gm2';
+    if (n.includes('24-70mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2470gm';
+    if (n.includes('28-70mm f2.0 gm') || n.includes('28-70mm f2 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2870gm';
+    if (n.includes('70-200mm f2.8 gm ii') || n.includes('70-200mm f2.8 gm oss ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200gm2';
+    if (n.includes('70-200mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200gm';
+    if (n.includes('100-400mm f4.5-5.6 gm') || n.includes('100-400mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400gm';
 
     // Sony G
-    if (n.includes('20mm f1.8 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel20f18g.html';
-    if (n.includes('24mm f2.8 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel24f28g.html';
-    if (n.includes('40mm f2.5 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel40f25g.html';
-    if (n.includes('50mm f2.5 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel50f25g.html';
-    if (n.includes('90mm f2.8 macro g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel90m28g.html';
-    if (n.includes('12-24mm f4 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel1224g.html';
-    if (n.includes('16-25mm f2.8 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel1625g.html';
-    if (n.includes('pz 16-35mm f4 g')) return 'https://www.sony.com.cn/products/di/lens/fe/selp1635g.html';
+    if (n.includes('20mm f1.8 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel20f18g';
+    if (n.includes('24mm f2.8 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel24f28g';
+    if (n.includes('40mm f2.5 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel40f25g';
+    if (n.includes('50mm f2.5 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel50f25g';
+    if (n.includes('90mm f2.8 macro g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel90m28g';
+    if (n.includes('12-24mm f4 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel1224g';
+    if (n.includes('16-25mm f2.8 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel1625g';
+    if (n.includes('pz 16-35mm f4 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/selp1635g';
     if (n.includes('c 16-35mm t3.1')) return 'https://pro.sony/zh_CN/products/cinema-lenses/selc1635g';
-    if (n.includes('20-70mm f4 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2070g.html';
-    if (n.includes('24-50mm f2.8 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2450g.html';
-    if (n.includes('24-105mm f4 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel24105g.html';
-    if (n.includes('pz 28-135mm f4 g')) return 'https://www.sony.com.cn/products/di/lens/fe/selp28135g.html';
-    if (n.includes('70-200mm f4 macro g oss ii')) return 'https://www.sony.com.cn/products/di/lens/fe/sel70200g2.html';
-    if (n.includes('70-200mm f4 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel70200g.html';
-    if (n.includes('70-300mm f4.5-5.6 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel70300g.html';
-    if (n.includes('200-600mm f5.6-6.3 g')) return 'https://www.sony.com.cn/products/di/lens/fe/sel200600g.html';
+    if (n.includes('20-70mm f4 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2070g';
+    if (n.includes('24-50mm f2.8 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2450g';
+    if (n.includes('24-105mm f4 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel24105g';
+    if (n.includes('pz 28-135mm f4 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/selp28135g';
+    if (n.includes('70-200mm f4 macro g oss ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200g2';
+    if (n.includes('70-200mm f4 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200g';
+    if (n.includes('70-300mm f4.5-5.6 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70300g';
+    if (n.includes('200-600mm f5.6-6.3 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel200600g';
     if (n.includes('18-110mm')) return 'https://pro.sony/zh_CN/products/cinema-lenses/selp18110g';
 
     // Sony Zeiss
-    if (n.includes('35mm f2.8 za')) return 'https://www.sony.com.cn/products/di/lens/fe/sel35f28z.html';
-    if (n.includes('35mm f1.4 za')) return 'https://www.sony.com.cn/products/di/lens/fe/sel35f14z.html';
-    if (n.includes('50mm f1.4 za')) return 'https://www.sony.com.cn/products/di/lens/fe/sel50f14z.html';
-    if (n.includes('55mm f1.8 za')) return 'https://www.sony.com.cn/products/di/lens/fe/sel55f18z.html';
-    if (n.includes('16-35mm f4 za')) return 'https://www.sony.com.cn/products/di/lens/fe/sel1635z.html';
-    if (n.includes('24-70mm f4 za')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2470z.html';
+    if (n.includes('35mm f2.8 za')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel35f28z';
+    if (n.includes('35mm f1.4 za')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel35f14z';
+    if (n.includes('50mm f1.4 za')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel50f14z';
+    if (n.includes('55mm f1.8 za')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel55f18z';
+    if (n.includes('16-35mm f4 za')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel1635z';
+    if (n.includes('24-70mm f4 za')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2470z';
 
     // Non-G
-    if (n.includes('28mm f2')) return 'https://www.sony.com.cn/products/di/lens/fe/sel28f20.html';
-    if (n.includes('35mm f1.8')) return 'https://www.sony.com.cn/products/di/lens/fe/sel35f18f.html';
-    if (n.includes('50mm f1.8')) return 'https://www.sony.com.cn/products/di/lens/fe/sel50f18f.html';
-    if (n.includes('50mm f2.8 macro')) return 'https://www.sony.com.cn/products/di/lens/fe/sel50m28.html';
-    if (n.includes('85mm f1.8')) return 'https://www.sony.com.cn/products/di/lens/fe/sel85f18.html';
-    if (n.includes('28-60mm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2860.html';
-    if (n.includes('28-70mm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel2870.html';
-    if (n.includes('24-240mm')) return 'https://www.sony.com.cn/products/di/lens/fe/sel24240.html';
-    return 'https://www.sony.com.cn/products/di/lens/fe/';
+    if (n.includes('28mm f2')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel28f20';
+    if (n.includes('35mm f1.8')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel35f18f';
+    if (n.includes('50mm f1.8')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel50f18f';
+    if (n.includes('50mm f2.8 macro')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel50m28';
+    if (n.includes('85mm f1.8')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel85f18';
+    if (n.includes('28-60mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2860';
+    if (n.includes('28-70mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2870';
+    if (n.includes('24-240mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel24240';
+    return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/';
   }
 
   // SIGMA 适马
@@ -136,6 +136,8 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
     if (n.includes('100-400mm f5-6.3 dg dn')) return 'https://www.sigma-global.com/en/lenses/c020_100_400_5_63/';
     if (n.includes('60-600mm f4.5-6.3 dg dn')) return 'https://www.sigma-global.com/en/lenses/s023_60_600_45_63/';
     if (n.includes('150-600mm f5-6.3 dg dn')) return 'https://www.sigma-global.com/en/lenses/s021_150_600_5_63/';
+    if (n.includes('20-200mm f3.5-6.3')) return 'https://www.sigma-global.com/en/lenses/c025_20_200_35_63/';
+    if (n.includes('135mm f1.4 dg')) return 'https://www.sigma-global.com/en/lenses/a025_135_14/';
     return 'https://www.sigma-global.com/en/lenses/';
   }
 
@@ -165,11 +167,11 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
 
   // ZEISS 蔡司
   if (brandCategory === 'zeiss') {
-    if (n.includes('batis')) return 'https://www.zeiss.com.cn/consumer-products/photography/batis.html';
-    if (n.includes('loxia')) return 'https://www.zeiss.com.cn/consumer-products/photography/loxia.html';
-    if (n.includes('otus')) return 'https://www.zeiss.com.cn/consumer-products/photography/otus.html';
-    if (n.includes('milvus')) return 'https://www.zeiss.com.cn/consumer-products/photography/milvus.html';
-    return 'https://www.zeiss.com.cn/consumer-products/photography.html';
+    if (n.includes('batis')) return 'https://www.zeiss.com.cn/consumer-products/photography/batis';
+    if (n.includes('loxia')) return 'https://www.zeiss.com.cn/consumer-products/photography/loxia';
+    if (n.includes('otus')) return 'https://www.zeiss.com.cn/consumer-products/photography/otus';
+    if (n.includes('milvus')) return 'https://www.zeiss.com.cn/consumer-products/photography/milvus';
+    return 'https://www.zeiss.com.cn/consumer-products/photography';
   }
 
   // VILTROX 唯卓仕
@@ -220,9 +222,9 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
 
   // TTARTISAN 铭匠
   if (brandCategory === 'ttartisan') {
-    if (n.includes('75mm f2.0') || n.includes('75mm f2')) return 'https://www.ttartisan.com/?AF-Lens/AF-75.html';
-    if (n.includes('35mm f1.8')) return 'https://www.ttartisan.com/?AF-Lens/AF-35.html';
-    if (n.includes('32mm f2.8')) return 'https://www.ttartisan.com/?AF-Lens/AF-32.html';
+    if (n.includes('75mm f2.0') || n.includes('75mm f2')) return 'https://www.ttartisan.com/?AF-Lens/AF-75';
+    if (n.includes('35mm f1.8')) return 'https://www.ttartisan.com/?AF-Lens/AF-35';
+    if (n.includes('32mm f2.8')) return 'https://www.ttartisan.com/?AF-Lens/AF-32';
     return 'https://www.ttartisan.com/';
   }
 
@@ -235,7 +237,7 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
 
   // YONGNUO 永诺
   if (brandCategory === 'yongnuo') {
-    return 'http://www.hkyongnuo.com/product/index.html';
+    return 'http://www.hkyongnuo.com/product/index';
   }
 
   // MEIKE 美科
