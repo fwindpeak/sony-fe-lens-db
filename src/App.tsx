@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import rawLensesData from './data/lenses.json';
 import { Lens, ViewMode } from './types/lens';
 import { useLensFilter } from './hooks/useLensFilter';
@@ -16,6 +17,7 @@ import { ComparisonDrawer } from './components/ComparisonDrawer';
 const allLenses: Lens[] = rawLensesData as Lens[];
 
 export const App: React.FC = () => {
+  const { t } = useTranslation();
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [detailLens, setDetailLens] = useState<Lens | null>(null);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
@@ -130,10 +132,10 @@ export const App: React.FC = () => {
       <footer className="mt-auto border-t border-slate-200 dark:border-slate-800/80 py-6 text-center text-xs text-slate-500 dark:text-slate-400">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div>
-            Sony FE Lens Database © {new Date().getFullYear()} · 纯前端静态驱动 · 收录 480+ 款全画幅 E 卡口镜头
+            {t('app.footer.copyright', { year: new Date().getFullYear() })}
           </div>
           <div className="text-slate-400 dark:text-slate-500">
-            实验室 MTF 与几何综合标定评分
+            {t('app.footer.note')}
           </div>
         </div>
       </footer>

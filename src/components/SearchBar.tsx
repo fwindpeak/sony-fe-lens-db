@@ -42,6 +42,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             <button
               onClick={() => onChange('')}
               className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              title={t('app.clearSearch')}
             >
               <X className="h-4 w-4" />
             </button>
@@ -55,7 +56,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             className="lg:hidden flex items-center gap-1.5 px-3.5 py-2.5 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-sm font-medium shadow-sm transition-colors"
           >
             <SlidersHorizontal className="h-4 w-4" />
-            <span>筛选</span>
+            <span>{t('filters.filterBtn')}</span>
           </button>
         )}
       </div>
@@ -67,7 +68,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {t('app.filteredCount', { count: filteredCount })}
           </span>
           {filteredCount < totalCount && (
-            <span className="text-slate-400">/ 全库 {totalCount}</span>
+            <span className="text-slate-400">/ {t('app.totalLensesInDb', { count: totalCount })}</span>
           )}
         </div>
 

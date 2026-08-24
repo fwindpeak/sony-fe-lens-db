@@ -5,9 +5,7 @@ import {
   X,
   Trash2,
   ChevronUp,
-  ChevronDown,
   Sparkles,
-  Trophy,
 } from 'lucide-react';
 import { Lens } from '../types/lens';
 import { OpticalRadarChart } from './OpticalRadarChart';
@@ -28,8 +26,10 @@ export const ComparisonDrawer: React.FC<ComparisonDrawerProps> = ({
   isOpen,
   onToggleOpen,
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   if (comparedLenses.length === 0) return null;
+
+  const isZh = i18n.language.startsWith('zh');
 
   return (
     <div className="fixed bottom-0 inset-x-0 z-40">
@@ -85,7 +85,7 @@ export const ComparisonDrawer: React.FC<ComparisonDrawerProps> = ({
 
       {/* 展开的横向 PK 对比大面板 */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex flex-col justify-end animate-fade-in">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex flex-col justify-end animate-fade-in overscroll-contain">
           <div className="bg-white dark:bg-[#131620] rounded-t-3xl max-h-[90vh] flex flex-col shadow-2xl border-t border-slate-200 dark:border-slate-800 animate-slide-up">
             {/* 顶部标题栏 */}
             <div className="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -114,12 +114,12 @@ export const ComparisonDrawer: React.FC<ComparisonDrawerProps> = ({
             </div>
 
             {/* 对比主体内容 (横向滚动) */}
-            <div className="p-4 sm:p-6 overflow-y-auto space-y-6">
+            <div className="p-4 sm:p-6 overflow-y-auto overscroll-contain space-y-6">
               {/* 多镜头雷达图叠加 */}
               <div className="flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-100 dark:border-slate-800">
                 <h4 className="text-xs font-bold text-slate-600 dark:text-slate-300 mb-2 flex items-center gap-1">
                   <Sparkles className="w-3.5 h-3.5 text-orange-500" />
-                  <span>多镜头六维光学评分重叠对比</span>
+                  <span>{t('app.compare.radarTitle')}</span>
                 </h4>
                 <OpticalRadarChart compareLenses={comparedLenses} size={280} />
                 <div className="flex flex-wrap justify-center gap-4 mt-3 text-xs font-semibold">
@@ -150,14 +150,14 @@ export const ComparisonDrawer: React.FC<ComparisonDrawerProps> = ({
                     <button
                       onClick={() => onRemove(lens.id)}
                       className="absolute top-3 right-3 p-1 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10"
-                      title="移出对比"
+                      title={t('app.compare.clear')}
                     >
                       <X className="w-4 h-4" />
                     </button>
 
                     <div>
                       <span className="text-[10px] px-2 py-0.5 rounded bg-orange-500/10 text-orange-600 dark:text-orange-400 font-bold">
-                        {lens.brandZh}
+                        {isZh ? lens.brandZh : lens.brandEn}
                       </span>
                       <h4 className="font-bold text-sm text-slate-800 dark:text-slate-100 mt-1 line-clamp-2 pr-6">
                         {lens.name}
@@ -167,39 +167,39 @@ export const ComparisonDrawer: React.FC<ComparisonDrawerProps> = ({
                     {/* 关键参数比对条目 */}
                     <div className="space-y-1.5 text-xs font-mono">
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">综合总分:</span>
+                        <span className="text-slate-500 font-sans">{t('modal.overallScore')}:</span>
                         <span className="font-black text-orange-600 dark:text-orange-400">
                           {lens.overallScore.toFixed(1)} / 100
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">锐度评级:</span>
+                        <span className="text-slate-500 font-sans">{t('table.sharpness')}:</span>
                         <span className="font-bold text-amber-500">{lens.sharpnessStar}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">性价比指数:</span>
+                        <span className="text-slate-500 font-sans">{t('card.value')}:</span>
                         <span className="font-bold">{lens.valueScore}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">便携指数:</span>
+                        <span className="text-slate-500 font-sans">{t('card.portability')}:</span>
                         <span className="font-bold">{lens.portabilityScore}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">焦段与光圈:</span>
+                        <span className="text-slate-500 font-sans">{t('table.focal')} / {t('table.aperture')}:</span>
                         <span className="font-bold">
                           {lens.focalDesc} {lens.apertureDesc}
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">重量:</span>
+                        <span className="text-slate-500 font-sans">{t('card.weight')}:</span>
                         <span className="font-bold">{formatWeight(lens.weightG)}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">长度:</span>
+                        <span className="text-slate-500 font-sans">{t('card.length')}:</span>
                         <span className="font-bold">{formatLength(lens.lengthMm)}</span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">滤镜口径:</span>
+                        <span className="text-slate-500 font-sans">{t('card.filter')}:</span>
                         <span className="font-bold">
                           {lens.filterThread && lens.filterThread !== '-'
                             ? `Φ${lens.filterThread}`
@@ -207,15 +207,15 @@ export const ComparisonDrawer: React.FC<ComparisonDrawerProps> = ({
                         </span>
                       </div>
                       <div className="flex justify-between py-1 border-b border-slate-200 dark:border-slate-700">
-                        <span className="text-slate-500 font-sans">防抖 / 对焦:</span>
+                        <span className="text-slate-500 font-sans">{t('modal.specs.focusAndOss')}:</span>
                         <span className="font-bold">
-                          {lens.hasOSS ? '支持防抖' : '无防抖'} / {lens.isAF ? 'AF' : 'MF'}
+                          {lens.hasOSS ? t('modal.specs.withOss') : t('modal.specs.noOss')} / {lens.isAF ? 'AF' : 'MF'}
                         </span>
                       </div>
                       <div className="flex justify-between py-1 pt-2">
-                        <span className="text-slate-500 font-sans">参考售价:</span>
+                        <span className="text-slate-500 font-sans">{t('card.price')}:</span>
                         <span className="font-extrabold text-sm text-orange-600 dark:text-orange-400">
-                          {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : '待定'}
+                          {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending')}
                         </span>
                       </div>
                     </div>

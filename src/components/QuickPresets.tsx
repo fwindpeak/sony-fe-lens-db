@@ -26,11 +26,11 @@ export const QuickPresets: React.FC<QuickPresetsProps> = ({
   ];
 
   return (
-    <div className="w-full overflow-x-auto no-scrollbar py-2">
+    <div className="w-full overflow-x-auto no-scrollbar py-1">
       <div className="flex items-center gap-2 min-w-max">
         <div className="flex items-center gap-1 text-xs font-semibold text-orange-600 dark:text-orange-400 pl-1 pr-2">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>推荐场景:</span>
+          <span>{t('presets.label')}</span>
         </div>
         {presets.map((p) => {
           const isActive =

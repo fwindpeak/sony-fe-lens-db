@@ -1,14 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Scale,
   Sparkles,
   Shield,
-  Layers,
   ChevronRight,
   Plus,
   Check,
-  Zap,
 } from 'lucide-react';
 import { Lens } from '../types/lens';
 import { formatPrice, formatWeight, getScoreColor } from '../utils/formatters';
@@ -98,7 +95,7 @@ export const LensCard: React.FC<LensCardProps> = ({
                 ? 'bg-orange-500 text-white shadow-sm'
                 : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-orange-500/10 hover:text-orange-600'
             }`}
-            title="加入多镜头对比 PK"
+            title={isComparing ? t('card.inCompare') : t('card.compare')}
           >
             {isComparing ? (
               <>
@@ -126,19 +123,19 @@ export const LensCard: React.FC<LensCardProps> = ({
         {/* 核心规格参数胶囊 */}
         <div className="grid grid-cols-3 gap-1.5 mb-3.5 text-[11px] font-mono">
           <div className="bg-slate-50 dark:bg-slate-800/60 p-1.5 rounded-lg text-center border border-slate-100 dark:border-slate-800">
-            <span className="text-slate-400 block text-[10px] font-sans">焦段</span>
+            <span className="text-slate-400 block text-[10px] font-sans">{t('card.focal')}</span>
             <span className="font-semibold text-slate-700 dark:text-slate-200">
               {lens.focalDesc}
             </span>
           </div>
           <div className="bg-slate-50 dark:bg-slate-800/60 p-1.5 rounded-lg text-center border border-slate-100 dark:border-slate-800">
-            <span className="text-slate-400 block text-[10px] font-sans">光圈</span>
+            <span className="text-slate-400 block text-[10px] font-sans">{t('card.aperture')}</span>
             <span className="font-semibold text-orange-600 dark:text-orange-400">
               {lens.apertureDesc}
             </span>
           </div>
           <div className="bg-slate-50 dark:bg-slate-800/60 p-1.5 rounded-lg text-center border border-slate-100 dark:border-slate-800">
-            <span className="text-slate-400 block text-[10px] font-sans">重量</span>
+            <span className="text-slate-400 block text-[10px] font-sans">{t('card.weight')}</span>
             <span className="font-semibold text-slate-700 dark:text-slate-200">
               {formatWeight(lens.weightG)}
             </span>
@@ -154,13 +151,13 @@ export const LensCard: React.FC<LensCardProps> = ({
                 : 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20'
             }`}
           >
-            {lens.isAF ? 'AF 自动' : 'MF 手动'}
+            {lens.isAF ? t('card.af') : t('card.mf')}
           </span>
 
           {lens.hasOSS && (
             <span className="px-1.5 py-0.5 rounded font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-0.5">
               <Shield className="w-2.5 h-2.5" />
-              防抖 OSS
+              {t('card.oss')}
             </span>
           )}
 
@@ -172,7 +169,7 @@ export const LensCard: React.FC<LensCardProps> = ({
 
           {lens.isMacro && (
             <span className="px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 font-semibold">
-              微距
+              {t('card.macro')}
             </span>
           )}
         </div>
@@ -196,7 +193,7 @@ export const LensCard: React.FC<LensCardProps> = ({
           <div className="space-y-1.5 text-[11px]">
             <div>
               <div className="flex justify-between text-slate-500 dark:text-slate-400 mb-0.5">
-                <span>性价比指数</span>
+                <span>{t('card.value')}</span>
                 <span className="font-mono font-semibold text-slate-700 dark:text-slate-300">
                   {lens.valueScore}
                 </span>
@@ -211,7 +208,7 @@ export const LensCard: React.FC<LensCardProps> = ({
 
             <div>
               <div className="flex justify-between text-slate-500 dark:text-slate-400 mb-0.5">
-                <span>便携指数</span>
+                <span>{t('card.portability')}</span>
                 <span className="font-mono font-semibold text-slate-700 dark:text-slate-300">
                   {lens.portabilityScore}
                 </span>
@@ -230,9 +227,9 @@ export const LensCard: React.FC<LensCardProps> = ({
       {/* 底部价格与详情入口 */}
       <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
         <div>
-          <span className="text-[10px] text-slate-400 block font-sans">参考售价</span>
+          <span className="text-[10px] text-slate-400 block font-sans">{t('card.price')}</span>
           <div className="text-base font-extrabold text-orange-600 dark:text-orange-400 font-mono">
-            {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : '待定'}
+            {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending')}
           </div>
         </div>
 

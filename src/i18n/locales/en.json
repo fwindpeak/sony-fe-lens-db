@@ -5,11 +5,12 @@
     "tagline": "Over 480 native and third-party full-frame E-mount lenses with multi-dimensional filtering, optical radar ratings, and PK comparisons.",
     "totalLenses": "Total {{count}} lenses",
     "filteredCount": "Matched {{count}} lenses",
+    "totalLensesInDb": "of total {{count}}",
     "averagePrice": "Avg Price: ¥{{price}}",
     "averageWeight": "Avg Weight: {{weight}}g",
     "resetAll": "Reset Filters",
     "clearSearch": "Clear Search",
-    "searchPlaceholder": "Search lens model, focal length, aperture, brand (e.g., 50 1.4, Sigma 85, GM, 24-70)...",
+    "searchPlaceholder": "Search model, focal, aperture, brand (e.g. 50 1.4, Sigma 85, GM, 24-70)...",
     "views": {
       "grid": "Grid View",
       "table": "Data Table"
@@ -21,22 +22,40 @@
       "expand": "Expand Comparison",
       "collapse": "Collapse",
       "addPrompt": "Click the compare icon on any lens card to add to PK",
-      "maxAlert": "Maximum 4 lenses can be compared simultaneously"
+      "maxAlert": "Maximum 4 lenses can be compared simultaneously",
+      "radarTitle": "Multi-Lens 6D Optical Score Overlay"
+    },
+    "pagination": {
+      "displaying": "Showing {{start}} - {{end}} of {{total}} lenses",
+      "first": "First",
+      "prev": "Prev",
+      "next": "Next",
+      "last": "Last"
+    },
+    "empty": {
+      "title": "No Matching Lenses Found",
+      "desc": "Try loosening your filters, such as lowering the min score, expanding the focal range, or clearing brand restrictions."
+    },
+    "footer": {
+      "copyright": "Sony FE Lens Database © {{year}} · Pure Client-Side Static Engine · 480+ Full-Frame E-Mount Lenses",
+      "note": "Calibrated Lab MTF & Geometric Optical Ratings"
     }
   },
   "presets": {
+    "label": "Quick Presets:",
     "all": "All Lenses",
     "trinityHoly": "🌟 Holy & F4 Trinities",
     "street": "🚶 Compact Everyday Street (<350g)",
     "portrait": "👤 Portrait Bokeh Master (F1.2-1.4/85-135mm)",
     "landscape": "🏔️ Landscape Ultra-Wide (≤24mm)",
-    "valueKing": "💰 Best Bang for the Buck (Value ≥ 50)",
+    "valueKing": "💰 Best Bang for Buck (Value≥45)",
     "birding": "🦅 Wildlife & Telephoto (≥200mm)",
     "macro": "🔍 Macro Close-Up",
     "sonyGM": "🔴 Sony G Master Flagship"
   },
   "filters": {
     "title": "Filters",
+    "filterBtn": "Filters",
     "brand": "Brand / Manufacturer",
     "brands": {
       "all": "All Brands",
@@ -65,36 +84,38 @@
       "af": "Auto Focus (AF)",
       "mf": "Manual Focus (MF)"
     },
-    "oss": "Optical Image Stabilization",
+    "oss": "Optical Stabilization (OSS/VC/OS)",
     "ossOptions": {
       "all": "All",
-      "yes": "Stabilized (OSS)",
+      "yes": "Stabilized",
       "no": "Non-Stabilized"
     },
     "focalLength": "Focal Range",
     "focalRanges": {
-      "ultraWide": "Ultra Wide (<24mm)",
-      "wide": "Wide (24-35mm)",
-      "standard": "Standard (35-60mm)",
-      "telephoto": "Telephoto (70-135mm)",
-      "superTelephoto": "Super Telephoto (>135mm)"
+      "ultraWide": "Ultra-Wide",
+      "wide": "Wide",
+      "standard": "Standard",
+      "telephoto": "Telephoto",
+      "superTelephoto": "Super Tele"
     },
     "aperture": "Max Aperture (≤)",
+    "unlimited": "Any",
     "filterThread": "Filter Thread",
-    "allThreads": "All Sizes",
-    "priceRange": "Price Range (CNY)",
-    "weightRange": "Weight Range (g)",
-    "scoreRange": "Min Optical Score (≥)",
+    "allThreads": "All",
+    "maxPrice": "Max Price",
+    "maxWeight": "Max Weight",
+    "minScore": "Min Optical Score",
     "specialBadges": "Special Badges",
     "badgeOptions": {
       "gmOnly": "Sony G Master (GM) Only",
       "gOnly": "Sony G Series Only",
       "macroOnly": "Macro Lenses Only"
-    }
+    },
+    "done": "Done"
   },
   "sort": {
     "label": "Sort By",
-    "overallScoreDesc": "Optical Total Score: High to Low",
+    "overallScoreDesc": "Optical Score: High to Low",
     "valueScoreDesc": "Value for Money: High to Low",
     "portabilityScoreDesc": "Portability Index: High to Low",
     "sharpnessScoreDesc": "Sharpness Rating: High to Low",
@@ -108,28 +129,30 @@
     "maxApertureAsc": "Max Aperture: Fast to Slow"
   },
   "card": {
-    "overall": "Optical Score",
-    "sharpness": "Sharpness",
-    "value": "Value",
-    "portability": "Portability",
-    "compare": "Compare",
-    "inCompare": "Comparing",
-    "viewDetail": "View Details",
-    "price": "Price",
+    "focal": "Focal",
+    "aperture": "Aperture",
     "weight": "Weight",
     "length": "Length",
     "filter": "Filter",
-    "minFocus": "Min Focus",
-    "release": "Released",
     "af": "AF",
     "mf": "MF",
     "oss": "OSS",
-    "noOss": "No OSS"
+    "macro": "Macro",
+    "overall": "Optical Score",
+    "value": "Value Index",
+    "portability": "Portability Index",
+    "price": "Price",
+    "pending": "TBD",
+    "compare": "Compare",
+    "inCompare": "Comparing",
+    "viewDetail": "Details"
   },
   "modal": {
     "title": "Lens Optical Radar & Full Specs",
     "radarTitle": "Six-Dimension Optical Performance",
     "specsTitle": "Detailed Physical & Optical Specs",
+    "overallScore": "Total Optical Score",
+    "released": "Released in {{date}}",
     "scores": {
       "sharpness": "Weighted Sharpness",
       "uniformity": "Frame Uniformity",
@@ -138,7 +161,22 @@
       "bokeh": "Bokeh & Rendering",
       "distortion": "Distortion & Vignetting"
     },
+    "specs": {
+      "focalRange": "Focal Range",
+      "maxAperture": "Max Aperture",
+      "focusAndOss": "Focus & OSS",
+      "filterThread": "Filter Thread",
+      "minFocus": "Min Focus Distance",
+      "weight": "Lens Weight",
+      "length": "Lens Length",
+      "price": "Reference Price",
+      "withOss": "Stabilized",
+      "noOss": "Non-Stabilized",
+      "noFilter": "None / Special"
+    },
     "scoreDesc": "Calibrated based on rigorous laboratory MTF data and wide-open rendering weights.",
+    "addToCompare": "Add to PK Comparison",
+    "inCompare": "Added to PK Comparison",
     "close": "Close"
   },
   "table": {
@@ -149,14 +187,14 @@
     "aperture": "Aperture",
     "af": "Focus",
     "oss": "OSS",
-    "overall": "Optical Score",
+    "overall": "Score",
     "sharpness": "Sharpness",
     "value": "Value",
-    "weight": "Weight (g)",
+    "weight": "Weight",
     "filter": "Filter",
     "price": "Price (¥)",
     "release": "Released",
-    "action": "Actions"
+    "action": "Action"
   },
   "theme": {
     "light": "Light Mode",

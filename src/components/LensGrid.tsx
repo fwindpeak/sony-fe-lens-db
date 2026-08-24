@@ -40,10 +40,10 @@ export const LensGrid: React.FC<LensGridProps> = ({
           <Camera className="w-8 h-8" />
         </div>
         <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-1">
-          没有找到匹配的镜头
+          {t('app.empty.title')}
         </h3>
         <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm mb-6">
-          尝试调整或放宽你的筛选条件，例如降低评分要求、扩大焦段或取消品牌限制。
+          {t('app.empty.desc')}
         </p>
         <button
           onClick={onResetFilters}
@@ -74,11 +74,11 @@ export const LensGrid: React.FC<LensGridProps> = ({
       {totalPages > 1 && (
         <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-slate-800">
           <div className="text-xs text-slate-500 dark:text-slate-400">
-            显示第 <span className="font-mono font-semibold">{startIndex + 1}</span> -{' '}
-            <span className="font-mono font-semibold">
-              {Math.min(startIndex + PAGE_SIZE, lenses.length)}
-            </span>{' '}
-            款，共 <span className="font-mono font-semibold">{lenses.length}</span> 款镜头
+            {t('app.pagination.displaying', {
+              start: startIndex + 1,
+              end: Math.min(startIndex + PAGE_SIZE, lenses.length),
+              total: lenses.length,
+            })}
           </div>
 
           <div className="flex items-center gap-1.5">
@@ -86,7 +86,7 @@ export const LensGrid: React.FC<LensGridProps> = ({
               onClick={() => setCurrentPage(1)}
               disabled={currentPage === 1}
               className="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-              title="第一页"
+              title={t('app.pagination.first')}
             >
               <ChevronsLeft className="w-4 h-4" />
             </button>
@@ -94,7 +94,7 @@ export const LensGrid: React.FC<LensGridProps> = ({
               onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
               disabled={currentPage === 1}
               className="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-              title="上一页"
+              title={t('app.pagination.prev')}
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -107,7 +107,7 @@ export const LensGrid: React.FC<LensGridProps> = ({
               onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-              title="下一页"
+              title={t('app.pagination.next')}
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -115,7 +115,7 @@ export const LensGrid: React.FC<LensGridProps> = ({
               onClick={() => setCurrentPage(totalPages)}
               disabled={currentPage === totalPages}
               className="p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-              title="最后一页"
+              title={t('app.pagination.last')}
             >
               <ChevronsRight className="w-4 h-4" />
             </button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Filter, RotateCcw, X, Check, Aperture, ShieldCheck, DollarSign, Weight, Star } from 'lucide-react';
+import { Filter, RotateCcw, X, Shield, DollarSign, Weight, Star } from 'lucide-react';
 import { FilterState, BrandCategory, FocalCategory } from '../types/lens';
 
 interface FilterSidebarProps {
@@ -12,28 +12,28 @@ interface FilterSidebarProps {
   onMobileClose?: () => void;
 }
 
-const BRANDS: { key: BrandCategory; labelZh: string; labelEn: string }[] = [
-  { key: 'all', labelZh: '全部品牌', labelEn: 'All Brands' },
-  { key: 'sony', labelZh: '索尼原厂 (Sony)', labelEn: 'Sony' },
-  { key: 'sigma', labelZh: '适马 (Sigma)', labelEn: 'Sigma' },
-  { key: 'tamron', labelZh: '腾龙 (Tamron)', labelEn: 'Tamron' },
-  { key: 'zeiss', labelZh: '蔡司 (Zeiss)', labelEn: 'Zeiss' },
-  { key: 'samyang', labelZh: '森养 (Samyang)', labelEn: 'Samyang' },
-  { key: 'viltrox', labelZh: '唯卓仕 (Viltrox)', labelEn: 'Viltrox' },
-  { key: 'laowa', labelZh: '老蛙 (Laowa)', labelEn: 'Laowa' },
-  { key: 'voigtlander', labelZh: '福伦达 (Voigtländer)', labelEn: 'Voigtländer' },
-  { key: 'ttartisan', labelZh: '铭匠 (TTArtisan)', labelEn: 'TTArtisan' },
-  { key: '7artisans', labelZh: '七工匠 (7Artisans)', labelEn: '7Artisans' },
-  { key: 'yongnuo', labelZh: '永诺 (Yongnuo)', labelEn: 'Yongnuo' },
-  { key: 'other', labelZh: '其他厂商', labelEn: 'Others' },
+const BRANDS: { key: BrandCategory; labelKey: string }[] = [
+  { key: 'all', labelKey: 'filters.brands.all' },
+  { key: 'sony', labelKey: 'filters.brands.sony' },
+  { key: 'sigma', labelKey: 'filters.brands.sigma' },
+  { key: 'tamron', labelKey: 'filters.brands.tamron' },
+  { key: 'zeiss', labelKey: 'filters.brands.zeiss' },
+  { key: 'samyang', labelKey: 'filters.brands.samyang' },
+  { key: 'viltrox', labelKey: 'filters.brands.viltrox' },
+  { key: 'laowa', labelKey: 'filters.brands.laowa' },
+  { key: 'voigtlander', labelKey: 'filters.brands.voigtlander' },
+  { key: 'ttartisan', labelKey: 'filters.brands.ttartisan' },
+  { key: '7artisans', labelKey: 'filters.brands.7artisans' },
+  { key: 'yongnuo', labelKey: 'filters.brands.yongnuo' },
+  { key: 'other', labelKey: 'filters.brands.other' },
 ];
 
-const FOCAL_RANGES: { key: FocalCategory; label: string; desc: string }[] = [
-  { key: 'ultra-wide', label: '超广角', desc: '<24mm' },
-  { key: 'wide', label: '广角', desc: '24-35mm' },
-  { key: 'standard', label: '标准人文', desc: '35-60mm' },
-  { key: 'telephoto', label: '中远人像', desc: '70-135mm' },
-  { key: 'super-telephoto', label: '超远摄', desc: '>135mm' },
+const FOCAL_RANGES: { key: FocalCategory; labelKey: string; desc: string }[] = [
+  { key: 'ultra-wide', labelKey: 'filters.focalRanges.ultraWide', desc: '<24mm' },
+  { key: 'wide', labelKey: 'filters.focalRanges.wide', desc: '24-35mm' },
+  { key: 'standard', labelKey: 'filters.focalRanges.standard', desc: '35-60mm' },
+  { key: 'telephoto', labelKey: 'filters.focalRanges.telephoto', desc: '70-135mm' },
+  { key: 'super-telephoto', labelKey: 'filters.focalRanges.superTelephoto', desc: '>135mm' },
 ];
 
 const FILTER_THREADS = ['all', '49', '55', '67', '72', '77', '82', '86', '95'];
@@ -46,11 +46,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   isMobileOpen = false,
   onMobileClose,
 }) => {
-  const { t, i18n } = useTranslation();
-  const isZh = i18n.language.startsWith('zh');
+  const { t } = useTranslation();
 
   const content = (
-    <div className="space-y-6 pb-8">
+    <div className="space-y-6 pb-6 select-none">
       {/* 顶部标题与重置按钮 */}
       <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
         <div className="flex items-center gap-2 font-bold text-base text-slate-800 dark:text-slate-100">
@@ -71,7 +70,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
           {t('filters.brand')}
         </label>
-        <div className="grid grid-cols-2 gap-1.5 max-h-48 overflow-y-auto pr-1">
+        <div className="grid grid-cols-2 gap-1.5 max-h-48 overflow-y-auto pr-1 overscroll-contain">
           {BRANDS.map((b) => {
             const isSelected = filters.brandCategory === b.key;
             return (
@@ -85,9 +84,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     ? 'bg-orange-500 text-white font-semibold shadow-sm'
                     : 'bg-slate-100/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
-                title={isZh ? b.labelZh : b.labelEn}
+                title={t(b.labelKey)}
               >
-                {isZh ? b.labelZh : b.labelEn}
+                {t(b.labelKey)}
               </button>
             );
           })}
@@ -122,7 +121,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      {/* 3. 对焦方式 & 光学防抖 (二合一布局) */}
+      {/* 3. 对焦方式 & 光学防抖 */}
       <div className="grid grid-cols-2 gap-4">
         {/* 对焦方式 */}
         <div>
@@ -131,9 +130,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           </label>
           <div className="flex flex-col gap-1">
             {[
-              { key: 'all', label: '全部' },
-              { key: 'af', label: '自动 (AF)' },
-              { key: 'mf', label: '手动 (MF)' },
+              { key: 'all', labelKey: 'filters.focusTypes.all' },
+              { key: 'af', labelKey: 'filters.focusTypes.af' },
+              { key: 'mf', labelKey: 'filters.focusTypes.mf' },
             ].map((f) => (
               <button
                 key={f.key}
@@ -149,7 +148,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
-                {f.label}
+                {t(f.labelKey)}
               </button>
             ))}
           </div>
@@ -162,9 +161,9 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           </label>
           <div className="flex flex-col gap-1">
             {[
-              { key: 'all', label: '全部' },
-              { key: 'yes', label: '支持防抖' },
-              { key: 'no', label: '无防抖' },
+              { key: 'all', labelKey: 'filters.ossOptions.all' },
+              { key: 'yes', labelKey: 'filters.ossOptions.yes' },
+              { key: 'no', labelKey: 'filters.ossOptions.no' },
             ].map((o) => (
               <button
                 key={o.key}
@@ -180,14 +179,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
-                {o.label}
+                {t(o.labelKey)}
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 4. 焦段分类 (多选) */}
+      {/* 4. 焦段分类 */}
       <div>
         <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
           {t('filters.focalLength')}
@@ -205,7 +204,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
               >
-                <span>{f.label}</span>
+                <span>{t(f.labelKey)}</span>
                 <span className="text-[10px] opacity-75 font-mono">{f.desc}</span>
               </button>
             );
@@ -213,14 +212,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      {/* 5. 最大光圈 (≤) */}
+      {/* 5. 最大光圈 */}
       <div>
         <div className="flex items-center justify-between mb-1.5">
           <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
             {t('filters.aperture')}
           </label>
           <span className="text-xs font-mono font-bold text-orange-600 dark:text-orange-400">
-            {filters.maxApertureMax >= 8.0 ? '不限' : `≤ F${filters.maxApertureMax.toFixed(1)}`}
+            {filters.maxApertureMax >= 8.0 ? t('filters.unlimited') : `≤ F${filters.maxApertureMax.toFixed(1)}`}
           </span>
         </div>
         <input
@@ -243,7 +242,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           <span>F1.8</span>
           <span>F2.8</span>
           <span>F4.0</span>
-          <span>不限</span>
+          <span>{t('filters.unlimited')}</span>
         </div>
       </div>
 
@@ -267,24 +266,24 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
               >
-                {thread === 'all' ? '全部' : `Φ${thread}`}
+                {thread === 'all' ? t('filters.allThreads') : `Φ${thread}`}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* 7. 价格与重量区间滑块 */}
+      {/* 7. 价格与重量滑块 */}
       <div className="space-y-4 pt-2 border-t border-slate-200 dark:border-slate-800">
-        {/* 价格区间 */}
+        {/* 价格 */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
               <DollarSign className="w-3.5 h-3.5 text-emerald-500" />
-              <span>最高价格</span>
+              <span>{t('filters.maxPrice')}</span>
             </div>
             <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
-              {filters.priceMax >= 50000 ? '不限' : `≤ ¥${filters.priceMax.toLocaleString()}`}
+              {filters.priceMax >= 50000 ? t('filters.unlimited') : `≤ ¥${filters.priceMax.toLocaleString()}`}
             </span>
           </div>
           <input
@@ -304,15 +303,15 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           />
         </div>
 
-        {/* 重量区间 */}
+        {/* 重量 */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
               <Weight className="w-3.5 h-3.5 text-blue-500" />
-              <span>最大重量</span>
+              <span>{t('filters.maxWeight')}</span>
             </div>
             <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400">
-              {filters.weightMax >= 2500 ? '不限' : `≤ ${filters.weightMax} g`}
+              {filters.weightMax >= 2500 ? t('filters.unlimited') : `≤ ${filters.weightMax} g`}
             </span>
           </div>
           <input
@@ -332,15 +331,15 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           />
         </div>
 
-        {/* 综合总分下限 */}
+        {/* 综合总分 */}
         <div>
           <div className="flex items-center justify-between mb-1.5">
             <div className="flex items-center gap-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
               <Star className="w-3.5 h-3.5 text-amber-500" />
-              <span>最低综合总分</span>
+              <span>{t('filters.minScore')}</span>
             </div>
             <span className="text-xs font-mono font-bold text-amber-600 dark:text-amber-400">
-              {filters.overallScoreMin === 0 ? '不限' : `≥ ${filters.overallScoreMin} 分`}
+              {filters.overallScoreMin === 0 ? t('filters.unlimited') : `≥ ${filters.overallScoreMin}`}
             </span>
           </div>
           <input
@@ -412,14 +411,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   return (
     <>
       {/* PC 桌面端侧边栏 */}
-      <aside className="hidden lg:block w-72 shrink-0 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-5 shadow-sm sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto">
+      <aside className="hidden lg:block w-72 shrink-0 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-2xl p-5 shadow-sm sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain">
         {content}
       </aside>
 
       {/* 移动端抽屉 (Drawer) */}
       {isMobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden flex flex-col justify-end bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white dark:bg-[#131620] rounded-t-3xl p-6 max-h-[85vh] overflow-y-auto shadow-2xl animate-slide-up">
+          <div className="bg-white dark:bg-[#131620] rounded-t-3xl p-6 max-h-[85vh] overflow-y-auto overscroll-contain shadow-2xl animate-slide-up">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-4">
               <span className="font-bold text-lg text-slate-800 dark:text-slate-100">
                 {t('filters.title')}
@@ -437,7 +436,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                 onClick={onMobileClose}
                 className="w-full py-3 bg-orange-500 text-white font-semibold rounded-xl shadow-lg shadow-orange-500/30 active:scale-[0.98] transition-transform"
               >
-                完成筛选
+                {t('filters.done')}
               </button>
             </div>
           </div>

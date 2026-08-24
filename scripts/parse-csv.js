@@ -68,9 +68,9 @@ function parseCSV() {
     const apertureDesc = cols[7] || '';
     const maxAperture = parseFloat(cols[8]) || 0;
     const focusType = cols[9] || '自动对焦 (AF)';
-    const isAF = focusType.includes('AF') || focusType.includes('自动');
+    const isAF = !focusType.includes('手动') && !focusType.includes('MF') && (focusType.includes('AF') || focusType.includes('自动'));
     const ossDesc = cols[10] || '不支持防抖';
-    const hasOSS = ossDesc.includes('支持防抖') || ossDesc.includes('支持');
+    const hasOSS = !ossDesc.includes('不支持') && !ossDesc.includes('无') && (ossDesc.includes('支持') || ossDesc.includes('防抖') || ossDesc.includes('OSS') || ossDesc.includes('VC') || ossDesc.includes('OS'));
     const sharpnessStar = cols[11] || '';
     const sharpnessScore = parseFloat(cols[12]) || 0;
     const uniformityScore = parseFloat(cols[13]) || 0;
