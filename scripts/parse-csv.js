@@ -177,14 +177,14 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
   // VILTROX 唯卓仕
   if (brandCategory === 'viltrox') {
     if (n.includes('16') && n.includes('1.8')) return 'https://viltrox.com/products/viltrox-af-16mm-f1-8-fe';
-    if (n.includes('135') && n.includes('1.8')) return 'https://viltrox.com/products/viltrox-af-135mm-f1-8-lab-fe';
-    if (n.includes('20') && n.includes('2.8')) return 'https://viltrox.com/products/viltrox-af-20mm-f2-8-fe';
-    if (n.includes('24') && n.includes('1.8')) return 'https://viltrox.com/products/viltrox-af-24mm-f1-8-fe';
-    if (n.includes('28') && n.includes('4.5')) return 'https://viltrox.com/products/viltrox-af-28mm-f4-5-fe';
-    if (n.includes('35') && n.includes('1.8')) return 'https://viltrox.com/products/viltrox-af-35mm-f1-8-fe';
-    if (n.includes('40') && n.includes('2.5')) return 'https://viltrox.com/products/viltrox-af-40mm-f2-5-fe';
-    if (n.includes('50') && n.includes('1.8')) return 'https://viltrox.com/products/viltrox-af-50mm-f1-8-fe';
-    if (n.includes('85') && n.includes('1.8')) return 'https://viltrox.com/products/viltrox-af-85mm-f1-8-ii-fe';
+    if (n.includes('135') && n.includes('1.8')) return 'https://viltrox.com/products/af-135mm-f1-8-lab-fe';
+    if (n.includes('20') && n.includes('2.8')) return 'https://viltrox.com/products/viltrox-af-20mm-f2-8';
+    if (n.includes('24') && n.includes('1.8')) return 'https://www.viltrox.com.cn/productinfo/519147.html';
+    if (n.includes('28') && n.includes('4.5')) return 'https://www.viltrox.com.cn/productinfo/3082384.html';
+    if (n.includes('35') && n.includes('1.8')) return 'https://viltrox.com/products/af-35mm-f1-8-fe';
+    if (n.includes('40') && n.includes('2.5')) return 'https://www.viltrox.com.cn/productinfo/2979735.html';
+    if (n.includes('55') && n.includes('1.8')) return 'https://viltrox.com/products/af-55mm-f1-8-fe';
+    if (n.includes('85') && n.includes('1.8')) return 'https://www.viltrox.com.cn/productinfo/516674.html';
     return 'https://www.viltrox.com.cn/';
   }
 
@@ -300,8 +300,12 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
   // YASUHARA
   if (bZh.includes('Yasuhara') || bEn.toLowerCase().includes('yasuhara')) return 'http://www.yasuhara.co.jp/';
 
-  // ARTRALAB 叙
-  if (bZh.includes('叙') || bEn.toLowerCase().includes('artra')) return 'https://www.artralab.com/';
+  // thypoch 叙
+  // if (bZh.includes('叙') || bEn.toLowerCase().includes('thypoch')) return 'https://thypoch.com/';
+  if (brandCategory === 'thypoch') {
+    if (n.includes('24-50mm')) return 'https://thypoch.com/voyager/24-50mm';
+    else return 'https://thypoch.com/';
+  }
 
   // CHAMELEON 变色龙
   if (bZh.includes('变色龙') || bEn.toLowerCase().includes('chameleon')) return 'https://www.chameleonlens.com/';
@@ -413,6 +417,8 @@ function parseCSV() {
       brandCategory = '7artisans';
     } else if (brandLower.includes('yongnuo') || brandLower.includes('永诺')) {
       brandCategory = 'yongnuo';
+    } else if (brandLower.includes('thypoch') || brandLower.includes('叙')) {
+      brandCategory = 'thypoch';
     }
 
     // 官方参数校对与修正
