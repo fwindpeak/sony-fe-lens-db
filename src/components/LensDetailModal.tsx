@@ -24,6 +24,18 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
   onToggleCompare,
 }) => {
   const { t, i18n } = useTranslation();
+
+  // 监听 ESC 按键关闭详情弹窗 (必须在早期 return 之前调用以符合 React Hook 规则)
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && lens) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lens, onClose]);
+
   if (!lens) return null;
 
   const isZh = i18n.language.startsWith('zh');
@@ -39,7 +51,12 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/70 backdrop-blur-md animate-fade-in overflow-y-auto overscroll-contain">
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-6 bg-black/75 backdrop-blur-md animate-fade-in overflow-y-auto overscroll-contain"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className="relative w-full max-w-3xl bg-white dark:bg-[#131620] border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl overflow-hidden my-8 animate-slide-up">
         {/* 顶部标题栏 */}
         <div className="flex items-start justify-between p-6 border-b border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-800/30">

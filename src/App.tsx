@@ -186,21 +186,22 @@ export const App: React.FC = () => {
         </div>
       </footer>
 
-      {/* 镜头六维光学雷达图详情弹窗 */}
-      <LensDetailModal
-        lens={detailLens}
-        onClose={() => setDetailLens(null)}
-        isComparing={detailLens ? isComparing(detailLens.id) : false}
-        onToggleCompare={(id) => toggleCompare(id)}
-      />
-
-      {/* 多镜头 PK 横向对比抽屉 */}
+      {/* 多镜头 PK 横向对比抽屉/弹窗 (z-50) */}
       <ComparisonDrawer
         comparedLenses={comparedLenses}
         onRemove={removeCompare}
         onClear={clearCompare}
         isOpen={isCompareDrawerOpen}
         onToggleOpen={() => setIsCompareDrawerOpen(!isCompareDrawerOpen)}
+        onSelectLens={(lens) => setDetailLens(lens)}
+      />
+
+      {/* 镜头六维光学雷达图详情弹窗 (z-[60]，置于对比弹窗上层) */}
+      <LensDetailModal
+        lens={detailLens}
+        onClose={() => setDetailLens(null)}
+        isComparing={detailLens ? isComparing(detailLens.id) : false}
+        onToggleCompare={(id) => toggleCompare(id)}
       />
     </div>
   );

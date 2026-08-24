@@ -34,20 +34,19 @@ export function useLensFilter(allLenses: Lens[]) {
   const [sortField, setSortField] = useState<SortField>('overallScore');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
-  // 构建 Fuse.js 模糊搜索引擎
+  // 构建 Fuse.js 模糊搜索引擎作为打底
   const fuse = useMemo(() => {
     return new Fuse(allLenses, {
       keys: [
-        { name: 'name', weight: 0.5 },
-        { name: 'brandZh', weight: 0.2 },
-        { name: 'brandEn', weight: 0.2 },
-        { name: 'focalDesc', weight: 0.3 },
+        { name: 'name', weight: 0.4 },
+        { name: 'brandZh', weight: 0.25 },
+        { name: 'brandEn', weight: 0.25 },
+        { name: 'focalDesc', weight: 0.35 },
         { name: 'apertureDesc', weight: 0.2 },
         { name: 'filterThread', weight: 0.1 },
       ],
-      threshold: 0.35,
+      threshold: 0.4,
       ignoreLocation: true,
-      useExtendedSearch: true,
     });
   }, [allLenses]);
 
@@ -94,14 +93,94 @@ export function useLensFilter(allLenses: Lens[]) {
   };
 
   // 多维过滤与搜索
-  const filteredLenses = useMemo(() => {
+  const { filteredLenses, searchScoreMap } = useMemo(() => {
     let result = allLenses;
+    const scoreMap = new Map<string, number>();
 
-    // 1. 搜索关键词
+    // 1. 搜索关键词匹配与多维打分
     if (filters.search.trim()) {
-      const searchTerms = filters.search.trim();
-      const searchResults = fuse.search(searchTerms);
-      result = searchResults.map((item) => item.item);
+      const rawQ = filters.search.trim();
+      const lowerQ = rawQ.toLowerCase();
+      const cleanQ = lowerQ.replace(/mm$/i, '').replace(/^f/i, '').trim();
+
+      // 中英文/数字边界智能分词: 如 "适马20-200" => "适马 20-200", "索尼24-70" => "索尼 24-70"
+      const expandedQ = rawQ
+        .replace(/([\u4e00-\u9fa5]+)([0-9a-zA-Z])/g, '$1 $2')
+        .replace(/([0-9a-zA-Z])([\u4e00-\u9fa5]+)/g, '$1 $2')
+        .toLowerCase();
+
+      const tokens = expandedQ.split(/\s+/).filter(Boolean);
+      const noSpaceQ = lowerQ.replace(/\s+/g, '');
+
+      // 基于全库进行精准度与语义打分
+      for (const lens of allLenses) {
+        let score = 0;
+        const bZh = (lens.brandZh || '').toLowerCase();
+        const bEn = (lens.brandEn || '').toLowerCase();
+        const name = (lens.name || '').toLowerCase();
+        const focalDesc = (lens.focalDesc || '').toLowerCase();
+        const apertureDesc = (lens.apertureDesc || '').toLowerCase();
+        const cleanFocal = focalDesc.replace('mm', '').trim();
+
+        const fullCombined = `${bZh} ${bEn} ${name} ${focalDesc} ${apertureDesc} ${bZh}${name} ${bEn}${name} ${bZh}${focalDesc}`.toLowerCase();
+        const noSpaceFull = fullCombined.replace(/\s+/g, '');
+
+        // 1. 焦段精准匹配 (如搜索 "20-200" 完美命中 20-200mm)
+        if (cleanFocal === cleanQ || focalDesc === lowerQ) {
+          score += 3000;
+        } else if (cleanFocal.startsWith(cleanQ + '-') || cleanFocal.endsWith('-' + cleanQ)) {
+          score += 300;
+        }
+
+        // 2. 去空格整串直接包含 (如 "适马20-200" 完美匹配 "适马20-200mm...")
+        if (noSpaceFull.includes(noSpaceQ)) {
+          score += 1500;
+          if (noSpaceFull.startsWith(noSpaceQ)) {
+            score += 500;
+          }
+        }
+
+        // 3. 多分词联合命中
+        let allTokensMatch = true;
+        let matchedCount = 0;
+
+        for (const token of tokens) {
+          const cleanToken = token.replace(/mm$/i, '').replace(/^f/i, '');
+          const isFocalMatch = cleanFocal === cleanToken || focalDesc === token || focalDesc.includes(token);
+          const isBrandMatch = bZh.includes(token) || bEn.includes(token);
+          const isNameMatch = name.includes(token);
+          const isApertureMatch = apertureDesc.toLowerCase().includes(token);
+          const isFullMatch = fullCombined.includes(token) || (cleanToken && fullCombined.includes(cleanToken));
+
+          if (isFocalMatch || isBrandMatch || isNameMatch || isApertureMatch || isFullMatch) {
+            matchedCount++;
+            score += 200;
+            if (cleanFocal === cleanToken) score += 800; // 焦段完全一致大加分
+            if (isBrandMatch) score += 400; // 品牌匹配加分
+            if (isApertureMatch) score += 300; // 光圈匹配加分
+          } else {
+            allTokensMatch = false;
+          }
+        }
+
+        if (allTokensMatch && tokens.length > 1) {
+          score += 800;
+        }
+
+        if (score > 0 && (allTokensMatch || matchedCount === tokens.length || noSpaceFull.includes(noSpaceQ))) {
+          scoreMap.set(lens.id, score);
+        }
+      }
+
+      // 4. Fuse.js 模糊匹配作为容错补充 (处理拼写笔误等)
+      const fuseResults = fuse.search(rawQ);
+      for (const item of fuseResults) {
+        const existing = scoreMap.get(item.item.id) || 0;
+        const fuseBoost = Math.max(0, Math.round((1 - (item.score || 0)) * 400));
+        scoreMap.set(item.item.id, existing + fuseBoost);
+      }
+
+      result = result.filter((lens) => scoreMap.has(lens.id));
     }
 
     // 2. 预设附加逻辑过滤
@@ -197,12 +276,23 @@ export function useLensFilter(allLenses: Lens[]) {
       );
     }
 
-    return result;
+    return { filteredLenses: result, searchScoreMap: scoreMap };
   }, [allLenses, filters, fuse]);
 
   // 排序
   const sortedLenses = useMemo(() => {
+    const isSearching = !!filters.search.trim();
+
     return [...filteredLenses].sort((a, b) => {
+      // 搜索状态下，默认按搜索相关度得分优先排序
+      if (isSearching && sortField === 'overallScore') {
+        const scoreA = searchScoreMap.get(a.id) || 0;
+        const scoreB = searchScoreMap.get(b.id) || 0;
+        if (scoreA !== scoreB) {
+          return sortDirection === 'asc' ? scoreA - scoreB : scoreB - scoreA;
+        }
+      }
+
       let valA = a[sortField];
       let valB = b[sortField];
 
@@ -222,7 +312,7 @@ export function useLensFilter(allLenses: Lens[]) {
       // 次级排序按综合分倒序
       return b.overallScore - a.overallScore;
     });
-  }, [filteredLenses, sortField, sortDirection]);
+  }, [filteredLenses, searchScoreMap, sortField, sortDirection, filters.search]);
 
   // 统计数据
   const stats = useMemo(() => {
