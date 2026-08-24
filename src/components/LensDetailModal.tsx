@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   X,
@@ -6,6 +6,7 @@ import {
   Check,
   Plus,
   ExternalLink,
+  Share2,
 } from 'lucide-react';
 import { Lens } from '../types/lens';
 import { OpticalRadarChart } from './OpticalRadarChart';
@@ -25,6 +26,7 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
   onToggleCompare,
 }) => {
   const { t, i18n } = useTranslation();
+  const [isCopied, setIsCopied] = useState(false);
 
   // 监听 ESC 按键关闭详情弹窗 (必须在早期 return 之前调用以符合 React Hook 规则)
   React.useEffect(() => {
@@ -87,12 +89,34 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
             </h2>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(window.location.href);
+                  setIsCopied(true);
+                  setTimeout(() => setIsCopied(false), 2000);
+                } catch {
+                  window.prompt('请复制当前镜头链接：', window.location.href);
+                }
+              }}
+              title={isCopied ? t('app.linkCopied') : t('app.share')}
+              className={`p-2 rounded-full border transition-all ${
+                isCopied
+                  ? 'bg-emerald-500 text-white border-emerald-600'
+                  : 'text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border-transparent'
+              }`}
+            >
+              {isCopied ? <Check className="w-4 h-4 text-white" /> : <Share2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
+            </button>
+
+            <button
+              onClick={onClose}
+              className="p-2 rounded-full text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* 弹窗主体 */}

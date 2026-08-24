@@ -7,34 +7,18 @@ import {
   SortDirection,
   FocalCategory,
 } from '../types/lens';
-
-const initialFilterState: FilterState = {
-  search: '',
-  brandCategory: 'all',
-  type: 'all',
-  focusType: 'all',
-  hasOSS: 'all',
-  focalCategories: [],
-  focalLengthMin: 9,
-  focalLengthMax: 800,
-  maxApertureMin: 0.95,
-  maxApertureMax: 8.0,
-  priceMin: 0,
-  priceMax: 100000,
-  weightMin: 0,
-  weightMax: 3500,
-  overallScoreMin: 0,
-  isMacroOnly: false,
-  isGMOnly: false,
-  isGOnly: false,
-  filterThread: 'all',
-  preset: null,
-};
+import { defaultFilterState, parseStateFromUrl } from '../utils/urlState';
 
 export function useLensFilter(allLenses: Lens[]) {
-  const [filters, setFilters] = useState<FilterState>(initialFilterState);
-  const [sortField, setSortField] = useState<SortField>('overallScore');
-  const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
+  const [filters, setFilters] = useState<FilterState>(() => {
+    return parseStateFromUrl().filters;
+  });
+  const [sortField, setSortField] = useState<SortField>(() => {
+    return parseStateFromUrl().sortField;
+  });
+  const [sortDirection, setSortDirection] = useState<SortDirection>(() => {
+    return parseStateFromUrl().sortDirection;
+  });
 
   // 构建 Fuse.js 模糊搜索引擎作为打底
   const fuse = useMemo(() => {
@@ -56,12 +40,12 @@ export function useLensFilter(allLenses: Lens[]) {
   // 处理快捷预设切换
   const applyPreset = (presetKey: string | null) => {
     if (!presetKey || presetKey === 'all') {
-      setFilters(initialFilterState);
+      setFilters(defaultFilterState);
       return;
     }
 
     const nextFilters: FilterState = {
-      ...initialFilterState,
+      ...defaultFilterState,
       preset: presetKey,
     };
 
@@ -401,7 +385,7 @@ export function useLensFilter(allLenses: Lens[]) {
   }, [filters]);
 
   const resetFilters = () => {
-    setFilters(initialFilterState);
+    setFilters(defaultFilterState);
   };
 
   const toggleFocalCategory = (category: FocalCategory) => {

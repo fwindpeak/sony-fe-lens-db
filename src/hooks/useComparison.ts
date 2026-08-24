@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Lens } from '../types/lens';
+import { parseStateFromUrl } from '../utils/urlState';
 
 const STORAGE_KEY = 'sony_lens_db_comparison_ids';
 const MAX_COMPARE_COUNT = 4;
@@ -7,6 +8,10 @@ const MAX_COMPARE_COUNT = 4;
 export function useComparison(allLenses: Lens[]) {
   const [selectedIds, setSelectedIds] = useState<string[]>(() => {
     try {
+      const urlCompare = parseStateFromUrl().compareIds;
+      if (urlCompare && urlCompare.length > 0) {
+        return urlCompare.slice(0, MAX_COMPARE_COUNT);
+      }
       const saved = localStorage.getItem(STORAGE_KEY);
       return saved ? JSON.parse(saved) : [];
     } catch {

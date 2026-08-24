@@ -15,6 +15,9 @@
       "grid": "Grid View",
       "table": "Data Table"
     },
+    "share": "Share",
+    "shareView": "Share current view",
+    "linkCopied": "Link copied to clipboard",
     "compare": {
       "title": "Lens PK Comparison",
       "subtitle": "Selected {{count}}/4 lenses",

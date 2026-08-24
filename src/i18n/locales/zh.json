@@ -15,6 +15,9 @@
       "grid": "卡片视图",
       "table": "专业表格"
     },
+    "share": "分享",
+    "shareView": "分享当前视图",
+    "linkCopied": "链接已复制到剪贴板",
     "compare": {
       "title": "镜头对比 PK",
       "subtitle": "已选 {{count}}/4 款镜头",

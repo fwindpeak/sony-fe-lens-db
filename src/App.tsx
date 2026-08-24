@@ -14,13 +14,22 @@ import { LensTable } from './components/LensTable';
 import { LensDetailModal } from './components/LensDetailModal';
 import { ComparisonDrawer } from './components/ComparisonDrawer';
 import { Info, ExternalLink } from 'lucide-react';
+import { parseStateFromUrl, serializeStateToUrl, updateBrowserUrl } from './utils/urlState';
 
 const allLenses: Lens[] = rawLensesData as Lens[];
 
 export const App: React.FC = () => {
   const { t } = useTranslation();
-  const [viewMode, setViewMode] = useState<ViewMode>('grid');
-  const [detailLens, setDetailLens] = useState<Lens | null>(null);
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    return parseStateFromUrl().viewMode;
+  });
+  const [detailLens, setDetailLens] = useState<Lens | null>(() => {
+    const urlState = parseStateFromUrl();
+    if (urlState.detailLensId) {
+      return allLenses.find((l) => l.id === urlState.detailLensId) || null;
+    }
+    return null;
+  });
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
     return localStorage.getItem('sony_lens_db_sidebar_collapsed') === 'true';
@@ -58,6 +67,38 @@ export const App: React.FC = () => {
     isOpen: isCompareDrawerOpen,
     setIsOpen: setIsCompareDrawerOpen,
   } = useComparison(allLenses);
+
+  // 1. 同步当前所有筛选、排序、视图及详情弹窗到 URL Query 参数
+  React.useEffect(() => {
+    const queryString = serializeStateToUrl({
+      filters,
+      sortField,
+      sortDirection,
+      viewMode,
+      detailLensId: detailLens?.id || null,
+      compareIds: comparedLenses.map((l) => l.id),
+    });
+    updateBrowserUrl(queryString);
+  }, [filters, sortField, sortDirection, viewMode, detailLens, comparedLenses]);
+
+  // 2. 监听浏览器前进/后退 (popstate) 触发的状态回退
+  React.useEffect(() => {
+    const handlePopState = () => {
+      const parsed = parseStateFromUrl();
+      setFilters(parsed.filters);
+      setSortField(parsed.sortField);
+      setSortDirection(parsed.sortDirection);
+      setViewMode(parsed.viewMode);
+      if (parsed.detailLensId) {
+        setDetailLens(allLenses.find((l) => l.id === parsed.detailLensId) || null);
+      } else {
+        setDetailLens(null);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [setFilters, setSortField, setSortDirection]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 dark:bg-[#0b0d13] dark:text-slate-100 transition-colors duration-200">

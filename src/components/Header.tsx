@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Moon, Sun, Monitor, Globe, Camera, Layers, Github } from 'lucide-react';
+import { Moon, Sun, Monitor, Globe, Camera, Layers, Github, Share2, Check } from 'lucide-react';
 import { useTheme, ThemeMode } from '../hooks/useTheme';
 
 interface HeaderProps {
@@ -10,6 +10,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ totalCount }) => {
   const { t, i18n } = useTranslation();
   const { theme, setTheme } = useTheme();
+  const [isCopied, setIsCopied] = useState(false);
 
   const toggleLanguage = () => {
     const nextLang = i18n.language.startsWith('zh') ? 'en' : 'zh';
@@ -20,6 +21,17 @@ export const Header: React.FC<HeaderProps> = ({ totalCount }) => {
     const order: ThemeMode[] = ['dark', 'light', 'system'];
     const nextIdx = (order.indexOf(theme) + 1) % order.length;
     setTheme(order[nextIdx]);
+  };
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    } catch {
+      // 降级使用 prompt
+      window.prompt('请复制当前分享链接：', window.location.href);
+    }
   };
 
   return (
@@ -55,6 +67,20 @@ export const Header: React.FC<HeaderProps> = ({ totalCount }) => {
             <Layers className="w-3.5 h-3.5 text-orange-500" />
             <span>{t('app.totalLenses', { count: totalCount })}</span>
           </div>
+
+          {/* 分享当前视图 / 链接 */}
+          <button
+            onClick={handleShare}
+            title={isCopied ? t('app.linkCopied') : t('app.shareView')}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all ${
+              isCopied
+                ? 'bg-emerald-500 text-white border-emerald-600'
+                : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border-slate-200 dark:border-slate-700/60'
+            }`}
+          >
+            {isCopied ? <Check className="w-3.5 h-3.5 text-white" /> : <Share2 className="w-3.5 h-3.5 text-orange-500" />}
+            <span className="hidden sm:inline font-medium">{isCopied ? t('app.linkCopied') : t('app.share')}</span>
+          </button>
 
           {/* 语言切换 */}
           <button
