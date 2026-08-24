@@ -1,0 +1,170 @@
+{
+  "app": {
+    "title": "索尼全画幅镜头数据库",
+    "subtitle": "Sony FE Lens Database",
+    "tagline": "收录 480+ 款原厂与副厂 E 卡口全画幅镜头，支持多维过滤、光学评级与横向 PK 对比",
+    "totalLenses": "共收录 {{count}} 款镜头",
+    "filteredCount": "匹配 {{count}} 款镜头",
+    "averagePrice": "均价: ¥{{price}}",
+    "averageWeight": "均重: {{weight}}g",
+    "resetAll": "重置筛选",
+    "clearSearch": "清空搜索",
+    "searchPlaceholder": "搜索型号、焦段、光圈、品牌（如 50 1.4, 适马 85, GM, 24-70）...",
+    "views": {
+      "grid": "卡片视图",
+      "table": "专业表格"
+    },
+    "compare": {
+      "title": "镜头对比 PK",
+      "subtitle": "已选 {{count}}/4 款镜头",
+      "clear": "清空对比",
+      "expand": "展开对比详情",
+      "collapse": "收起对比",
+      "addPrompt": "点击卡片右上角对比按钮加入 PK",
+      "maxAlert": "最多同时对比 4 款镜头"
+    }
+  },
+  "presets": {
+    "all": "全部镜头",
+    "trinityHoly": "🌟 大三元/小三元",
+    "street": "🚶 轻便挂机扫街 (<350g)",
+    "portrait": "👤 人像虚化神器 (F1.2-1.4/85-135mm)",
+    "landscape": "🏔️ 风光超广利器 (≤24mm)",
+    "valueKing": "💰 极致性价比精选 (性价比≥50)",
+    "birding": "🦅 生态打鸟长焦 (≥200mm)",
+    "macro": "🔍 微距特写探秘",
+    "sonyGM": "🔴 原厂 G Master 旗舰"
+  },
+  "filters": {
+    "title": "多维条件筛选",
+    "brand": "品牌厂商",
+    "brands": {
+      "all": "全部品牌",
+      "sony": "索尼原厂 (Sony)",
+      "sigma": "适马 (Sigma)",
+      "tamron": "腾龙 (Tamron)",
+      "zeiss": "蔡司 (Zeiss)",
+      "samyang": "森养 (Samyang)",
+      "viltrox": "唯卓仕 (Viltrox)",
+      "laowa": "老蛙 (Laowa)",
+      "voigtlander": "福伦达 (Voigtlander)",
+      "ttartisan": "铭匠 (TTArtisan)",
+      "7artisans": "七工匠 (7Artisans)",
+      "yongnuo": "永诺 (Yongnuo)",
+      "other": "其他厂商"
+    },
+    "type": "镜头类型",
+    "types": {
+      "all": "全部",
+      "prime": "定焦镜头",
+      "zoom": "变焦镜头"
+    },
+    "focus": "对焦方式",
+    "focusTypes": {
+      "all": "全部",
+      "af": "自动对焦 (AF)",
+      "mf": "手动对焦 (MF)"
+    },
+    "oss": "光学防抖 (OSS/VC/OS)",
+    "ossOptions": {
+      "all": "全部",
+      "yes": "具备防抖",
+      "no": "无防抖"
+    },
+    "focalLength": "焦段区间",
+    "focalRanges": {
+      "ultraWide": "超广角 (<24mm)",
+      "wide": "广角 (24-35mm)",
+      "standard": "标准人文 (35-60mm)",
+      "telephoto": "中长焦人像 (70-135mm)",
+      "superTelephoto": "超远摄 (>135mm)"
+    },
+    "aperture": "最大光圈 (≤)",
+    "filterThread": "滤镜口径",
+    "allThreads": "全部口径",
+    "priceRange": "参考价格区间 (元)",
+    "weightRange": "镜头重量区间 (g)",
+    "scoreRange": "综合光学总分 (≥)",
+    "specialBadges": "特殊规格筛选",
+    "badgeOptions": {
+      "gmOnly": "仅看索尼 G Master (GM)",
+      "gOnly": "仅看索尼 G 系列",
+      "macroOnly": "仅看微距镜头 (Macro)"
+    }
+  },
+  "sort": {
+    "label": "排序规则",
+    "overallScoreDesc": "综合光学总分: 从高到低",
+    "valueScoreDesc": "性价比指数: 从高到低",
+    "portabilityScoreDesc": "轻便便携度: 从高到低",
+    "sharpnessScoreDesc": "锐度评分: 从高到低",
+    "priceCnyAsc": "参考价格: 从低到高",
+    "priceCnyDesc": "参考价格: 从高到低",
+    "weightGAsc": "镜头重量: 从轻到重",
+    "weightGDesc": "镜头重量: 从重到轻",
+    "releaseDateDesc": "上市发布时间: 最新",
+    "releaseDateAsc": "上市发布时间: 最早",
+    "focalMinAsc": "焦距: 广角到长焦",
+    "maxApertureAsc": "最大光圈: 极大到极小"
+  },
+  "card": {
+    "overall": "综合光学总分",
+    "sharpness": "锐度",
+    "value": "性价比",
+    "portability": "便携度",
+    "compare": "PK对比",
+    "inCompare": "已在对比",
+    "viewDetail": "查看详情",
+    "price": "参考价",
+    "weight": "重量",
+    "length": "长度",
+    "filter": "滤镜",
+    "minFocus": "最近对焦",
+    "release": "上市",
+    "af": "AF",
+    "mf": "MF",
+    "oss": "防抖",
+    "noOss": "无防抖"
+  },
+  "modal": {
+    "title": "镜头全景规格与光学雷达图",
+    "radarTitle": "六维光学综合评级",
+    "specsTitle": "详细物理与光学规格",
+    "scores": {
+      "sharpness": "加权锐度均值",
+      "uniformity": "全画面一致性",
+      "wideOpen": "全开可用度",
+      "caControl": "色散抑制控制",
+      "bokeh": "虚化氛围评分",
+      "distortion": "畸变暗角控制"
+    },
+    "scoreDesc": "数据基于高规格实验室MTF标定与全开成像几何权重综合换算",
+    "close": "关闭"
+  },
+  "table": {
+    "name": "镜头名称",
+    "brand": "品牌",
+    "type": "类型",
+    "focal": "焦段",
+    "aperture": "光圈",
+    "af": "对焦",
+    "oss": "防抖",
+    "overall": "综合总分",
+    "sharpness": "锐度星级",
+    "value": "性价比",
+    "weight": "重量(g)",
+    "filter": "滤镜",
+    "price": "价格(¥)",
+    "release": "上市",
+    "action": "操作"
+  },
+  "theme": {
+    "light": "亮色模式",
+    "dark": "暗色模式",
+    "system": "跟随系统"
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "app": {
+    "title": "Sony FE Lens Database",
+    "subtitle": "Comprehensive Full-Frame E-Mount Lenses",
+    "tagline": "Over 480 native and third-party full-frame E-mount lenses with multi-dimensional filtering, optical radar ratings, and PK comparisons.",
+    "totalLenses": "Total {{count}} lenses",
+    "filteredCount": "Matched {{count}} lenses",
+    "averagePrice": "Avg Price: ¥{{price}}",
+    "averageWeight": "Avg Weight: {{weight}}g",
+    "resetAll": "Reset Filters",
+    "clearSearch": "Clear Search",
+    "searchPlaceholder": "Search lens model, focal length, aperture, brand (e.g., 50 1.4, Sigma 85, GM, 24-70)...",
+    "views": {
+      "grid": "Grid View",
+      "table": "Data Table"
+    },
+    "compare": {
+      "title": "Lens PK Comparison",
+      "subtitle": "Selected {{count}}/4 lenses",
+      "clear": "Clear All",
+      "expand": "Expand Comparison",
+      "collapse": "Collapse",
+      "addPrompt": "Click the compare icon on any lens card to add to PK",
+      "maxAlert": "Maximum 4 lenses can be compared simultaneously"
+    }
+  },
+  "presets": {
+    "all": "All Lenses",
+    "trinityHoly": "🌟 Holy & F4 Trinities",
+    "street": "🚶 Compact Everyday Street (<350g)",
+    "portrait": "👤 Portrait Bokeh Master (F1.2-1.4/85-135mm)",
+    "landscape": "🏔️ Landscape Ultra-Wide (≤24mm)",
+    "valueKing": "💰 Best Bang for the Buck (Value ≥ 50)",
+    "birding": "🦅 Wildlife & Telephoto (≥200mm)",
+    "macro": "🔍 Macro Close-Up",
+    "sonyGM": "🔴 Sony G Master Flagship"
+  },
+  "filters": {
+    "title": "Filters",
+    "brand": "Brand / Manufacturer",
+    "brands": {
+      "all": "All Brands",
+      "sony": "Sony",
+      "sigma": "Sigma",
+      "tamron": "Tamron",
+      "zeiss": "Zeiss",
+      "samyang": "Samyang / Rokinon",
+      "viltrox": "Viltrox",
+      "laowa": "Laowa",
+      "voigtlander": "Voigtländer",
+      "ttartisan": "TTArtisan",
+      "7artisans": "7Artisans",
+      "yongnuo": "Yongnuo",
+      "other": "Others"
+    },
+    "type": "Lens Type",
+    "types": {
+      "all": "All",
+      "prime": "Prime Lens",
+      "zoom": "Zoom Lens"
+    },
+    "focus": "Focus Type",
+    "focusTypes": {
+      "all": "All",
+      "af": "Auto Focus (AF)",
+      "mf": "Manual Focus (MF)"
+    },
+    "oss": "Optical Image Stabilization",
+    "ossOptions": {
+      "all": "All",
+      "yes": "Stabilized (OSS)",
+      "no": "Non-Stabilized"
+    },
+    "focalLength": "Focal Range",
+    "focalRanges": {
+      "ultraWide": "Ultra Wide (<24mm)",
+      "wide": "Wide (24-35mm)",
+      "standard": "Standard (35-60mm)",
+      "telephoto": "Telephoto (70-135mm)",
+      "superTelephoto": "Super Telephoto (>135mm)"
+    },
+    "aperture": "Max Aperture (≤)",
+    "filterThread": "Filter Thread",
+    "allThreads": "All Sizes",
+    "priceRange": "Price Range (CNY)",
+    "weightRange": "Weight Range (g)",
+    "scoreRange": "Min Optical Score (≥)",
+    "specialBadges": "Special Badges",
+    "badgeOptions": {
+      "gmOnly": "Sony G Master (GM) Only",
+      "gOnly": "Sony G Series Only",
+      "macroOnly": "Macro Lenses Only"
+    }
+  },
+  "sort": {
+    "label": "Sort By",
+    "overallScoreDesc": "Optical Total Score: High to Low",
+    "valueScoreDesc": "Value for Money: High to Low",
+    "portabilityScoreDesc": "Portability Index: High to Low",
+    "sharpnessScoreDesc": "Sharpness Rating: High to Low",
+    "priceCnyAsc": "Price: Low to High",
+    "priceCnyDesc": "Price: High to Low",
+    "weightGAsc": "Weight: Light to Heavy",
+    "weightGDesc": "Weight: Heavy to Light",
+    "releaseDateDesc": "Release Date: Newest First",
+    "releaseDateAsc": "Release Date: Oldest First",
+    "focalMinAsc": "Focal Length: Wide to Tele",
+    "maxApertureAsc": "Max Aperture: Fast to Slow"
+  },
+  "card": {
+    "overall": "Optical Score",
+    "sharpness": "Sharpness",
+    "value": "Value",
+    "portability": "Portability",
+    "compare": "Compare",
+    "inCompare": "Comparing",
+    "viewDetail": "View Details",
+    "price": "Price",
+    "weight": "Weight",
+    "length": "Length",
+    "filter": "Filter",
+    "minFocus": "Min Focus",
+    "release": "Released",
+    "af": "AF",
+    "mf": "MF",
+    "oss": "OSS",
+    "noOss": "No OSS"
+  },
+  "modal": {
+    "title": "Lens Optical Radar & Full Specs",
+    "radarTitle": "Six-Dimension Optical Performance",
+    "specsTitle": "Detailed Physical & Optical Specs",
+    "scores": {
+      "sharpness": "Weighted Sharpness",
+      "uniformity": "Frame Uniformity",
+      "wideOpen": "Wide-Open Usability",
+      "caControl": "CA & Fringe Control",
+      "bokeh": "Bokeh & Rendering",
+      "distortion": "Distortion & Vignetting"
+    },
+    "scoreDesc": "Calibrated based on rigorous laboratory MTF data and wide-open rendering weights.",
+    "close": "Close"
+  },
+  "table": {
+    "name": "Lens Name",
+    "brand": "Brand",
+    "type": "Type",
+    "focal": "Focal",
+    "aperture": "Aperture",
+    "af": "Focus",
+    "oss": "OSS",
+    "overall": "Optical Score",
+    "sharpness": "Sharpness",
+    "value": "Value",
+    "weight": "Weight (g)",
+    "filter": "Filter",
+    "price": "Price (¥)",
+    "release": "Released",
+    "action": "Actions"
+  },
+  "theme": {
+    "light": "Light Mode",
+    "dark": "Dark Mode",
+    "system": "System"
+  },
+  "lang": {
+    "zh": "中文",
+    "en": "English"
+  }
+}

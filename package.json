@@ -1,0 +1,36 @@
+{
+  "name": "sony-fe-lens-db",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/parse-csv.js && tsc -b && vite build",
+    "preview": "vite preview",
+    "parse-data": "node scripts/parse-csv.js"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "fuse.js": "^7.0.0",
+    "i18next": "^23.16.8",
+    "i18next-browser-languagedetector": "^8.0.2",
+    "lucide-react": "^0.475.0",
+    "papaparse": "^5.5.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.0",
+    "tailwind-merge": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@types/papaparse": "^5.3.15",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "~5.7.2",
+    "vite": "^6.1.0"
+  }
+}
