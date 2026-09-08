@@ -144,11 +144,10 @@ export const AdminDataModal: React.FC<AdminDataModalProps> = ({ isOpen, onClose 
         <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800/80 mb-5">
           <div className="flex items-center gap-2.5">
             <div
-              className={`w-9 h-9 rounded-xl flex items-center justify-center ${
-                isAdmin
+              className={`w-9 h-9 rounded-xl flex items-center justify-center ${isAdmin
                   ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20'
                   : 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20'
-              }`}
+                }`}
             >
               {isAdmin ? <ShieldCheck className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
             </div>
@@ -173,9 +172,9 @@ export const AdminDataModal: React.FC<AdminDataModalProps> = ({ isOpen, onClose 
         {/* 未认证：登录表单 */}
         {!isAdmin ? (
           <form onSubmit={handleLogin} className="space-y-4">
-            <div className="bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+            {/* <div className="bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
               为了保障作者耗费大量心血收集与标定的 420+ 款全画幅镜头数据库不被第三方轻易批量抓取或滥用，数据的全量导入导出仅对持有口令的站长或授权管理员开放。
-            </div>
+            </div> */}
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">

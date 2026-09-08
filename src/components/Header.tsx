@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import {
   Moon,
   Sun,
-  Monitor,
   Globe,
   Camera,
   Layers,
@@ -14,7 +13,7 @@ import {
   MoreVertical,
   ShieldCheck,
 } from 'lucide-react';
-import { useTheme, ThemeMode } from '../hooks/useTheme';
+import { useTheme } from '../hooks/useTheme';
 import { useAdminAuth } from '../hooks/useAdminAuth';
 
 interface HeaderProps {
@@ -24,7 +23,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ totalCount, onOpenAdminModal }) => {
   const { t, i18n } = useTranslation();
-  const { theme, setTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const { isAdmin } = useAdminAuth();
 
   const [isCopied, setIsCopied] = useState(false);
@@ -33,12 +32,6 @@ export const Header: React.FC<HeaderProps> = ({ totalCount, onOpenAdminModal }) 
   const toggleLanguage = () => {
     const nextLang = i18n.language.startsWith('zh') ? 'en' : 'zh';
     i18n.changeLanguage(nextLang);
-  };
-
-  const cycleTheme = () => {
-    const order: ThemeMode[] = ['dark', 'light', 'system'];
-    const nextIdx = (order.indexOf(theme) + 1) % order.length;
-    setTheme(order[nextIdx]);
   };
 
   const handleShare = async () => {
@@ -125,15 +118,17 @@ export const Header: React.FC<HeaderProps> = ({ totalCount, onOpenAdminModal }) 
             </span>
           </button>
 
-          {/* 全端保留：主题切换 */}
+          {/* 丝滑二态主题切换 (暗色 / 亮色) */}
           <button
-            onClick={cycleTheme}
-            title={`当前主题: ${theme}`}
-            className="p-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/60 transition-colors"
+            onClick={toggleTheme}
+            title={theme === 'dark' ? '切换为亮色模式' : '切换为暗色模式'}
+            className="p-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/60 transition-colors cursor-pointer group"
           >
-            {theme === 'dark' && <Moon className="w-4 h-4 text-orange-400" />}
-            {theme === 'light' && <Sun className="w-4 h-4 text-amber-500" />}
-            {theme === 'system' && <Monitor className="w-4 h-4 text-blue-400" />}
+            {theme === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400 group-hover:rotate-45 transition-transform duration-300" />
+            ) : (
+              <Moon className="w-4 h-4 text-slate-700 group-hover:-rotate-12 transition-transform duration-300" />
+            )}
           </button>
 
           {/* 桌面端：GitHub 链接 */}

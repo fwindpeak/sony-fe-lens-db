@@ -25,6 +25,16 @@
     --accent: #FF5A00;
   }
 
+  html.theme-smooth-transition,
+  html.theme-smooth-transition body,
+  html.theme-smooth-transition header,
+  html.theme-smooth-transition div,
+  html.theme-smooth-transition button,
+  html.theme-smooth-transition select,
+  html.theme-smooth-transition input {
+    transition: background-color 260ms ease, border-color 260ms ease, color 200ms ease;
+  }
+
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
