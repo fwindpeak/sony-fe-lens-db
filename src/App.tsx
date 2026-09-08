@@ -13,6 +13,7 @@ import { LensGrid } from './components/LensGrid';
 import { LensTable } from './components/LensTable';
 import { LensDetailModal } from './components/LensDetailModal';
 import { ComparisonDrawer } from './components/ComparisonDrawer';
+import { AdminDataModal } from './components/AdminDataModal';
 import { Info, ExternalLink } from 'lucide-react';
 import { parseStateFromUrl, serializeStateToUrl, updateBrowserUrl } from './utils/urlState';
 
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
     return null;
   });
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
+  const [isAdminModalOpen, setIsAdminModalOpen] = useState<boolean>(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
     return localStorage.getItem('sony_lens_db_sidebar_collapsed') === 'true';
   });
@@ -103,10 +105,13 @@ export const App: React.FC = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#f8fafc] text-slate-900 dark:bg-[#0b0d13] dark:text-slate-100 transition-colors duration-200">
       {/* 顶部 Header */}
-      <Header totalCount={allLenses.length} />
+      <Header
+        totalCount={allLenses.length}
+        onOpenAdminModal={() => setIsAdminModalOpen(true)}
+      />
 
       {/* 主体区域 */}
-      <main className="flex-1 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="flex-1 max-w-[1720px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6 space-y-3 sm:space-y-6">
         {/* 顶部一键场景推荐栏 */}
         <QuickPresets
           activePreset={filters.preset}
@@ -246,6 +251,12 @@ export const App: React.FC = () => {
         onClose={() => setDetailLens(null)}
         isComparing={detailLens ? isComparing(detailLens.id) : false}
         onToggleCompare={(id) => toggleCompare(id)}
+      />
+
+      {/* 数据库资产安全管理与权限认证弹窗 (z-[70]) */}
+      <AdminDataModal
+        isOpen={isAdminModalOpen}
+        onClose={() => setIsAdminModalOpen(false)}
       />
     </div>
   );

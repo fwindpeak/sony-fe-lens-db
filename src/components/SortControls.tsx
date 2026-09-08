@@ -62,9 +62,9 @@ export const SortControls: React.FC<SortControlsProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-xl p-2.5 sm:p-3 shadow-sm">
+    <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 bg-white dark:bg-[#131620] border border-slate-200/80 dark:border-slate-800/80 rounded-xl p-2 sm:p-3 shadow-sm">
       {/* 左侧：侧边栏展开/收起按钮 (PC) + 排序选择区 */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar">
         {onToggleSidebar && (
           <button
             onClick={onToggleSidebar}
@@ -85,14 +85,14 @@ export const SortControls: React.FC<SortControlsProps> = ({
           </button>
         )}
 
-        <div className="flex items-center gap-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
+        <div className="flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-slate-500 dark:text-slate-400 shrink-0">
           <ArrowUpDown className="w-3.5 h-3.5 text-orange-500" />
-          <span>{t('sort.label')}:</span>
+          <span className="hidden xs:inline">{t('sort.label')}:</span>
         </div>
         <select
           value={sortField}
           onChange={(e) => handleSelectField(e.target.value as SortField)}
-          className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium rounded-lg px-2.5 py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500 cursor-pointer"
+          className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] sm:text-xs font-medium rounded-lg px-2 sm:px-2.5 py-1 sm:py-1.5 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-orange-500 cursor-pointer"
         >
           {sortFieldsList.map((item) => (
             <option key={item.field} value={item.field}>
@@ -105,7 +105,7 @@ export const SortControls: React.FC<SortControlsProps> = ({
         <button
           onClick={onSortDirectionToggle}
           title={sortDirection === 'asc' ? '当前升序 (点击切换为降序)' : '当前降序 (点击切换为升序)'}
-          className="p-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 transition-colors"
+          className="p-1 sm:p-1.5 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 transition-colors shrink-0"
         >
           {sortDirection === 'asc' ? (
             <ArrowUp className="w-3.5 h-3.5 text-orange-500" />

@@ -26,10 +26,10 @@ export const QuickPresets: React.FC<QuickPresetsProps> = ({
   ];
 
   return (
-    <div className="w-full overflow-x-auto no-scrollbar py-1">
-      <div className="flex items-center gap-2 min-w-max">
-        <div className="flex items-center gap-1 text-xs font-semibold text-orange-600 dark:text-orange-400 pl-1 pr-2">
-          <Sparkles className="w-3.5 h-3.5" />
+    <div className="w-full overflow-x-auto no-scrollbar py-0.5 sm:py-1">
+      <div className="flex items-center gap-1.5 sm:gap-2 min-w-max">
+        <div className="flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-orange-600 dark:text-orange-400 pl-1 pr-1.5">
+          <Sparkles className="w-3.5 h-3.5 shrink-0" />
           <span>{t('presets.label')}</span>
         </div>
         {presets.map((p) => {
@@ -40,7 +40,7 @@ export const QuickPresets: React.FC<QuickPresetsProps> = ({
             <button
               key={p.key}
               onClick={() => onSelectPreset(p.key === 'all' ? null : p.key)}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
+              className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-medium transition-all duration-200 border whitespace-nowrap ${
                 isActive
                   ? 'bg-orange-500 text-white border-orange-500 shadow-sm shadow-orange-500/30'
                   : 'bg-white dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700/60 hover:border-orange-500/50 hover:bg-orange-500/5'
