@@ -213,10 +213,52 @@ export const LensDetailModal: React.FC<LensDetailModalProps> = ({
                   {formatLength(lens.lengthMm)}
                 </span>
               </div>
-              <div className="bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800">
-                <span className="text-slate-400 block font-sans text-[11px]">{t('modal.specs.price')}</span>
-                <span className="font-bold text-orange-600 dark:text-orange-400">
-                  {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending')}
+            </div>
+          </div>
+
+          {/* 市场价格行情多维参考卡片 */}
+          <div>
+            <h4 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
+              市场行情参考 (国内电商 / 闲鱼二手 / 香港Price)
+            </h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-mono">
+              {/* 二手行情 */}
+              <div className="bg-emerald-500/5 dark:bg-emerald-950/20 border border-emerald-500/20 p-3 rounded-xl">
+                <span className="text-emerald-700 dark:text-emerald-400 block font-sans text-[11px] font-semibold">
+                  {t('modal.specs.priceUsed')} (闲鱼/转转)
+                </span>
+                <span className="text-base font-extrabold text-emerald-600 dark:text-emerald-300">
+                  {lens.priceUsed && lens.priceUsed > 0 ? `¥${formatPrice(lens.priceUsed)}` : '暂无'}
+                </span>
+              </div>
+
+              {/* 电商全新 */}
+              <div className="bg-orange-500/5 dark:bg-orange-950/20 border border-orange-500/20 p-3 rounded-xl">
+                <span className="text-orange-700 dark:text-orange-400 block font-sans text-[11px] font-semibold">
+                  {t('modal.specs.priceNew')} (国行/电商)
+                </span>
+                <span className="text-base font-extrabold text-orange-600 dark:text-orange-400">
+                  {lens.priceNew && lens.priceNew > 0 ? `¥${formatPrice(lens.priceNew)}` : (lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending'))}
+                </span>
+              </div>
+
+              {/* 香港Price */}
+              <div className="bg-blue-500/5 dark:bg-blue-950/20 border border-blue-500/20 p-3 rounded-xl">
+                <span className="text-blue-700 dark:text-blue-400 block font-sans text-[11px] font-semibold">
+                  {t('modal.specs.priceHk')} (Price.com.hk)
+                </span>
+                <span className="text-base font-extrabold text-blue-600 dark:text-blue-300">
+                  {lens.priceHk && lens.priceHk > 0 ? `HK$${formatPrice(lens.priceHk)}` : '-'}
+                </span>
+              </div>
+
+              {/* 发售指导价 */}
+              <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 p-3 rounded-xl">
+                <span className="text-slate-400 block font-sans text-[11px]">
+                  {t('modal.specs.priceMsrp')} (发售价)
+                </span>
+                <span className="text-base font-bold text-slate-600 dark:text-slate-300">
+                  {lens.priceMsrp && lens.priceMsrp > 0 ? `¥${formatPrice(lens.priceMsrp)}` : '-'}
                 </span>
               </div>
             </div>

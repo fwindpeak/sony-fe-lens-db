@@ -5,9 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/parse-csv.js && tsc -b && vite build",
+    "build": "node scripts/lens-manager.js --validate && tsc -b && vite build",
     "preview": "vite preview",
-    "parse-data": "node scripts/parse-csv.js"
+    "data:validate": "node scripts/lens-manager.js --validate",
+    "data:export-csv": "node scripts/lens-manager.js --export-csv",
+    "data:export-sqlite": "node scripts/lens-manager.js --export-sqlite",
+    "data:all": "node scripts/lens-manager.js --all"
   },
   "dependencies": {
     "clsx": "^2.1.1",

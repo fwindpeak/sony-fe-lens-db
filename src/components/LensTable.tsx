@@ -77,6 +77,7 @@ export const LensTable: React.FC<LensTableProps> = ({
               {t('table.filter')}
             </th>
             {renderSortHeader(t('table.price'), 'priceCny')}
+            {renderSortHeader(t('table.priceUsed'), 'priceUsed')}
             {renderSortHeader(t('table.release'), 'releaseDate')}
             <th className="sticky top-0 z-20 bg-slate-100/95 dark:bg-[#161a27]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700/80 py-3.5 px-3 text-xs font-bold text-slate-700 dark:text-slate-200 text-center whitespace-nowrap">
               {t('table.action')}
@@ -143,7 +144,10 @@ export const LensTable: React.FC<LensTableProps> = ({
                     : '-'}
                 </td>
                 <td className="py-3 px-3 font-mono font-bold text-orange-600 dark:text-orange-400 whitespace-nowrap">
-                  {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : '待定'}
+                  {lens.priceNew && lens.priceNew > 0 ? `¥${formatPrice(lens.priceNew)}` : (lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : '待定')}
+                </td>
+                <td className="py-3 px-3 font-mono font-semibold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">
+                  {lens.priceUsed && lens.priceUsed > 0 ? `¥${formatPrice(lens.priceUsed)}` : '-'}
                 </td>
                 <td className="py-3 px-3 font-mono text-slate-400 whitespace-nowrap">
                   {lens.releaseDate || '-'}

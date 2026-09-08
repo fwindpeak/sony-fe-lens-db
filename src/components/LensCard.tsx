@@ -225,11 +225,21 @@ export const LensCard: React.FC<LensCardProps> = ({
       </div>
 
       {/* 底部价格与详情入口 */}
-      <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-        <div>
-          <span className="text-[10px] text-slate-400 block font-sans">{t('card.price')}</span>
-          <div className="text-base font-extrabold text-orange-600 dark:text-orange-400 font-mono">
-            {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending')}
+      <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-end justify-between gap-2">
+        <div className="flex flex-col">
+          <div className="flex items-baseline gap-1.5 flex-wrap">
+            <span className="text-[10px] text-slate-400 font-sans">{t('card.priceNew')}</span>
+            <span className="text-base font-extrabold text-orange-600 dark:text-orange-400 font-mono">
+              {lens.priceNew && lens.priceNew > 0 ? `¥${formatPrice(lens.priceNew)}` : (lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending'))}
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[11px] font-mono mt-0.5">
+            <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-sans bg-emerald-500/10 px-1 rounded">
+              {t('card.priceUsed')}
+            </span>
+            <span className="font-semibold text-emerald-700 dark:text-emerald-300">
+              {lens.priceUsed && lens.priceUsed > 0 ? `¥${formatPrice(lens.priceUsed)}` : '暂无'}
+            </span>
           </div>
         </div>
 

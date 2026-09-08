@@ -94,17 +94,24 @@ npm run build
 
 ---
 
-## 📊 数据更新与维护 (Data Maintenance)
+## 📊 数据架构与持续维护 (Data Architecture & Maintenance)
 
-镜头原始数据存放在 `resource/sony_lenses_calibrated_complete.csv` 中。
+本项目已全面升级为 **纯 JSON 权威数据源模式 (Single Source of Truth)**，主数据位于 `src/data/lenses.json`：
+- 前端打包直接读取经过严格类型定义与光学标定的 JSON 数据，告别多层中转带来的字段脱节与格式丢失；
+- 内置自动化数据治理工具 `scripts/lens-manager.js`，支持一键校验、规范 CSV 导出与 SQLite 数据库生成。
 
-当你更新或添加了新的镜头数据行后，只需执行以下命令即可重新生成 JSON 数据集：
+### 常用维护命令
 
-```bash
-npm run parse-data
-```
+| 命令 | 说明 |
+| :--- | :--- |
+| `npm run data:validate` | 全量校验：检测是否有虚构型号、评分越界 (>5.0 或 <1.0)、重复条目与价格异常 |
+| `npm run data:export-csv` | 一键同步导出为规范带 BOM 的 `resource/sony_lenses_calibrated_complete.csv`（兼容 Excel/Numbers） |
+| `npm run data:export-sqlite` | 一键生成 `dist/lenses.db` SQLite 数据库（含完整表结构、索引与 SQL 导入文件） |
+| `npm run data:all` | 一键执行“全量数据校验 + CSV导出 + SQLite生成” |
+| `npm run build` | 自动执行数据校验、TypeScript 编译与 Vite 生产级极速打包 |
 
-或者直接执行 `npm run build`，脚本会在每次打包前自动同步最新的 CSV 标定数据到 `src/data/lenses.json`。
+### 前端一键导出支持
+Web 界面顶部导航栏提供「导出数据」功能，访客与摄友可一键将最新清洗的索尼全画幅镜头库直接保存为 `.json` 或 `.csv` 文件，便于离线分析、分享交流或导入自建项目。
 
 ---
 
@@ -116,24 +123,25 @@ sony-fe-lens-db/
 │   └── workflows/
 │       └── deploy-pages.yml      # GitHub Actions 自动部署工作流
 ├── resource/
-│   └── sony_lenses_calibrated_complete.csv # 镜头基础数据库 (CSV)
+│   └── sony_lenses_calibrated_complete.csv # 规范导出的镜头数据库 (CSV)
 ├── scripts/
-│   └── parse-csv.js              # CSV 转 JSON 数据预处理脚本
+│   ├── lens-manager.js           # 数据库统一治理工具 (校验/CSV导出/SQLite生成)
+│   └── sanitize-and-upgrade-db.js # 数据清洗与行情升级脚本
 ├── src/
 │   ├── components/               # React UI 组件
-│   │   ├── ComparisonDrawer.tsx  # 镜头对比抽屉
+│   │   ├── ComparisonDrawer.tsx  # 镜头对比抽屉 (含二手与新品多维价格PK)
 │   │   ├── FilterSidebar.tsx     # 筛选侧边栏
-│   │   ├── Header.tsx            # 顶部导航与操作栏
-│   │   ├── LensCard.tsx          # 镜头卡片
-│   │   ├── LensDetailModal.tsx   # 镜头详情弹窗
+│   │   ├── Header.tsx            # 顶部导航与一键导出菜单 (JSON/CSV)
+│   │   ├── LensCard.tsx          # 镜头卡片 (二手行情与电商新品并列)
+│   │   ├── LensDetailModal.tsx   # 镜头详情弹窗 (全景四维行情与雷达图)
 │   │   ├── LensGrid.tsx          # 镜头卡片网格
-│   │   ├── LensTable.tsx         # 镜头数据表格
-│   │   ├── OpticalRadarChart.tsx # 六维光学雷达图
+│   │   ├── LensTable.tsx         # 镜头数据表格 (支持多价格排序)
+│   │   ├── OpticalRadarChart.tsx # 六维光学雷达图 (严控 5.0 封顶)
 │   │   ├── QuickPresets.tsx      # 快捷预设场景
 │   │   ├── SearchBar.tsx         # 搜索框
 │   │   └── SortControls.tsx      # 排序控制栏
 │   ├── data/
-│   │   └── lenses.json           # 生成的镜头结构化数据
+│   │   └── lenses.json           # 核心权威结构化镜头数据库 (纯 JSON 直读)
 │   ├── hooks/                    # 自定义 React Hooks
 │   ├── i18n/                     # 中英文多语言配置与翻译词条
 │   ├── types/                    # TypeScript 类型定义

@@ -323,8 +323,8 @@ export function useLensFilter(allLenses: Lens[]) {
         }
       }
 
-      let valA = a[sortField];
-      let valB = b[sortField];
+      let valA: string | number = a[sortField] ?? 0;
+      let valB: string | number = b[sortField] ?? 0;
 
       // 日期排序特殊处理 (如 "2024.4")
       if (sortField === 'releaseDate') {

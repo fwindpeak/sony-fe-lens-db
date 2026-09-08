@@ -56,6 +56,10 @@ export interface Lens {
   lengthMm: number;
   filterThread: string;
   priceCny: number;
+  priceNew?: number;
+  priceUsed?: number;
+  priceHk?: number;
+  priceMsrp?: number;
   officialUrl?: string;
   isGM: boolean;
   isG: boolean;
@@ -71,6 +75,8 @@ export type SortField =
   | 'portabilityScore'
   | 'sharpnessScore'
   | 'priceCny'
+  | 'priceUsed'
+  | 'priceNew'
   | 'weightG'
   | 'releaseDate'
   | 'focalMin'
@@ -84,6 +90,8 @@ export const DEFAULT_SORT_DIRECTIONS: Record<SortField, SortDirection> = {
   portabilityScore: 'desc',
   sharpnessScore: 'desc',
   priceCny: 'asc',
+  priceUsed: 'asc',
+  priceNew: 'asc',
   weightG: 'asc',
   releaseDate: 'desc',
   focalMin: 'asc',

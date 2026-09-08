@@ -318,10 +318,16 @@ export const ComparisonDrawer: React.FC<ComparisonDrawerProps> = ({
                             {lens.hasOSS ? t('modal.specs.withOss') : t('modal.specs.noOss')} / {lens.isAF ? 'AF' : 'MF'}
                           </span>
                         </div>
-                        <div className="flex justify-between py-1.5 pt-2">
-                          <span className="text-slate-500 font-sans">{t('card.price')}:</span>
+                        <div className="flex justify-between py-1.5 border-b border-slate-200 dark:border-slate-700">
+                          <span className="text-slate-500 font-sans">{t('card.priceNew')}:</span>
                           <span className="font-extrabold text-sm text-orange-600 dark:text-orange-400">
-                            {lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending')}
+                            {lens.priceNew && lens.priceNew > 0 ? `¥${formatPrice(lens.priceNew)}` : (lens.priceCny > 0 ? `¥${formatPrice(lens.priceCny)}` : t('card.pending'))}
+                          </span>
+                        </div>
+                        <div className="flex justify-between py-1.5 pt-1.5">
+                          <span className="text-slate-500 font-sans">{t('card.priceUsed')}:</span>
+                          <span className="font-bold text-sm text-emerald-600 dark:text-emerald-400">
+                            {lens.priceUsed && lens.priceUsed > 0 ? `¥${formatPrice(lens.priceUsed)}` : '暂无'}
                           </span>
                         </div>
                       </div>
