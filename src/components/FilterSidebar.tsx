@@ -39,8 +39,8 @@ const FOCAL_RANGES: { key: FocalCategory; labelKey: string; desc: string }[] = [
 ];
 
 const QUICK_FOCALS = [
-  { label: '全部', min: 9, max: 800 },
-  { label: '≤24mm', min: 9, max: 24 },
+  { label: '全部', min: 8, max: 800 },
+  { label: '≤24mm', min: 8, max: 24 },
   { label: '24mm', min: 24, max: 24 },
   { label: '28mm', min: 28, max: 28 },
   { label: '35mm', min: 35, max: 35 },
@@ -222,7 +222,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             {t('filters.exactFocalSlider')}
           </label>
           <span className="text-xs font-mono font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded-full border border-orange-500/20">
-            {filters.focalLengthMin <= 9 && filters.focalLengthMax >= 800
+            {filters.focalLengthMin <= 8 && filters.focalLengthMax >= 800
               ? t('filters.focalUnlimited')
               : filters.focalLengthMin === filters.focalLengthMax
               ? `${filters.focalLengthMin}mm`
@@ -262,11 +262,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <div className="space-y-1 mb-2.5">
           <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
             <span>{t('filters.focalMin')}: {filters.focalLengthMin}mm</span>
-            <span className="text-[10px] text-slate-400">9mm ~ 600mm</span>
+            <span className="text-[10px] text-slate-400">8mm ~ 600mm</span>
           </div>
           <input
             type="range"
-            min="9"
+            min="8"
             max="600"
             step="1"
             value={filters.focalLengthMin}

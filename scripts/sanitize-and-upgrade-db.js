@@ -52,11 +52,7 @@ const FAKE_LENS_PATTERNS = [
 
 function isFakeLens(lens) {
   // 检查上市时间异常未来的虚构镜头
-  if (lens.releaseDate && parseFloat(lens.releaseDate) > 2026.08) {
-    // 允许适马 2026.09.08 刚发布的真镜头
-    if (lens.name.includes('85mm F1.2 DG') || lens.name.includes('20-60mm F2.8-4')) {
-      return false;
-    }
+  if (lens.releaseDate && parseFloat(lens.releaseDate) > 2026.11) {
     return true;
   }
   for (const pattern of FAKE_LENS_PATTERNS) {

@@ -254,7 +254,7 @@ export function useLensFilter(allLenses: Lens[]) {
     }
 
     // 8. 精确焦段范围 (滑块)
-    if (filters.focalLengthMin > 9 || filters.focalLengthMax < 800) {
+    if (filters.focalLengthMin > 8 || filters.focalLengthMax < 800) {
       result = result.filter(
         (lens) =>
           lens.focalMax >= filters.focalLengthMin &&
@@ -372,7 +372,7 @@ export function useLensFilter(allLenses: Lens[]) {
     if (filters.focusType !== 'all') cnt++;
     if (filters.hasOSS !== 'all') cnt++;
     if (filters.focalCategories.length > 0) cnt += filters.focalCategories.length;
-    if (filters.focalLengthMin > 9 || filters.focalLengthMax < 800) cnt++;
+    if (filters.focalLengthMin > 8 || filters.focalLengthMax < 800) cnt++;
     if (filters.maxApertureMax < 8.0) cnt++;
     if (filters.priceMax < 50000) cnt++;
     if (filters.weightMax < 2500) cnt++;

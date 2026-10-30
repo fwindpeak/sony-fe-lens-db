@@ -19,7 +19,7 @@
 
 ## 📖 项目简介 (Introduction)
 
-**Sony FE Lens DB** 是一个专为摄影师与相机爱好者打造的索尼 E 卡口镜头全景数据库应用。收录了来自索尼（Sony）、腾龙（Tamron）、适马（Sigma）、蔡司（Zeiss）、唯卓仕（Viltrox）、森养（Samyang）、老蛙（Laowa）、福伦达（Voigtländer）等十余个主流品牌的 **480+ 款全画幅镜头**。
+**Sony FE Lens DB** 是一个专为摄影师与相机爱好者打造的索尼 E 卡口镜头全景数据库应用。收录了来自索尼（Sony）、腾龙（Tamron）、适马（Sigma）、蔡司（Zeiss）、唯卓仕（Viltrox）、森养（Samyang）、老蛙（Laowa）、福伦达（Voigtländer）等十余个主流品牌的 **488 款全画幅镜头**。
 
 通过多维度光学测试标定、便携与性价比指数、六维雷达图可视化以及强大的对比选型工具，帮助你快速找到最适合自己拍摄场景的镜头方案。
 

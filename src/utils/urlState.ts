@@ -16,7 +16,7 @@ export const defaultFilterState: FilterState = {
   focusType: 'all',
   hasOSS: 'all',
   focalCategories: [],
-  focalLengthMin: 9,
+  focalLengthMin: 8,
   focalLengthMax: 800,
   maxApertureMin: 0.95,
   maxApertureMax: 8.0,
