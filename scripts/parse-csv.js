@@ -59,9 +59,13 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
     if (n.includes('24-70mm f2.8 gm ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2470gm2';
     if (n.includes('24-70mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2470gm';
     if (n.includes('28-70mm f2.0 gm') || n.includes('28-70mm f2 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2870gm';
+    if (!n.includes('100-400') && (n.includes('400mm f4.5 gm') || n.includes('400mm f4.5'))) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel400f45gm';
+    if (!n.includes('100-600') && (n.includes('600mm f6.3 gm') || n.includes('600mm f6.3'))) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel600f63gm';
+    if (n.includes('8-14mm f3.5') || n.includes('8-14mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel0814g';
+    if (n.includes('100-400mm f5.6-8') || (n.includes('sel100400') && !n.includes('gm'))) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400';
     if (n.includes('70-200mm f2.8 gm ii') || n.includes('70-200mm f2.8 gm oss ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200gm2';
     if (n.includes('70-200mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200gm';
-    if (n.includes('100-400mm f4.5-5.6 gm') || n.includes('100-400mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400gm';
+    if (n.includes('100-400mm f4.5-5.6 gm') || n.includes('100-400mm f4.5') || n.includes('100-400mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400gm';
 
     // Sony G
     if (n.includes('20mm f1.8 g')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel20f18g';
@@ -244,7 +248,11 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
   if (bZh.includes('美科') || bEn.toLowerCase().includes('meike')) return 'https://meikeglobal.com/';
 
   // SIRUI 思锐
-  if (bZh.includes('思锐') || bEn.toLowerCase().includes('sirui')) return 'https://www.sirui.com/';
+  if (bZh.includes('思锐') || bEn.toLowerCase().includes('sirui')) {
+    if (n.includes('swift') && n.includes('20mm')) return 'https://www.sirui.com/products/sirui-swift-20mm-f2-4-autofocus-lens';
+    if (n.includes('swift') && n.includes('40mm')) return 'https://www.sirui.com/products/sirui-swift-40mm-f2-2-autofocus-lens';
+    return 'https://www.sirui.com/';
+  }
 
   // TOKINA 图丽
   if (bZh.includes('图丽') || bEn.toLowerCase().includes('tokina')) return 'https://tokinalens.com/';

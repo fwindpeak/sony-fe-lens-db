@@ -45,9 +45,10 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
   const bEn = brandEn || '';
 
   if (brandCategory === 'sony') {
-    if (n.includes('400mm f4.5 gm') || n.includes('400mm f4.5')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel400f45gm';
-    if (n.includes('600mm f6.3 gm') || n.includes('600mm f6.3')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel600f63gm';
+    if (!n.includes('100-400') && (n.includes('400mm f4.5 gm') || n.includes('400mm f4.5'))) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel400f45gm';
+    if (!n.includes('100-600') && (n.includes('600mm f6.3 gm') || n.includes('600mm f6.3'))) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel600f63gm';
     if (n.includes('8-14mm f3.5') || n.includes('8-14mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel0814g';
+    if (n.includes('100-400mm f5.6-8') || n.includes('sel100400') && !n.includes('gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400';
     if (n.includes('14mm f1.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel14f18gm';
     if (n.includes('24mm f1.4 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel24f14gm';
     if (n.includes('35mm f1.4 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel35f14gm';
@@ -68,7 +69,7 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
     if (n.includes('28-70mm f2.0 gm') || n.includes('28-70mm f2 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel2870gm';
     if (n.includes('70-200mm f2.8 gm ii') || n.includes('70-200mm f2.8 gm oss ii')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200gm2';
     if (n.includes('70-200mm f2.8 gm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel70200gm';
-    if (n.includes('100-400mm f4.5-5.6 gm') || n.includes('100-400mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400gm';
+    if (n.includes('100-400mm f4.5-5.6 gm') || n.includes('100-400mm f4.5') || n.includes('100-400mm')) return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400gm';
     return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/';
   }
 
@@ -109,6 +110,12 @@ function getOfficialUrl(name, brandCategory, brandZh, brandEn) {
     if (n.includes('85') && n.includes('1.4')) return 'https://viltrox.com/products/af-85mm-f1-4-pro-fe';
     if (n.includes('135') && n.includes('1.8')) return 'https://viltrox.com/products/af-135mm-f1-8-lab-fe';
     return 'https://viltrox.com.cn/';
+  }
+
+  if (bZh.includes('思锐') || bEn.toLowerCase().includes('sirui')) {
+    if (n.includes('swift') && n.includes('20mm')) return 'https://www.sirui.com/products/sirui-swift-20mm-f2-4-autofocus-lens';
+    if (n.includes('swift') && n.includes('40mm')) return 'https://www.sirui.com/products/sirui-swift-40mm-f2-2-autofocus-lens';
+    return 'https://www.sirui.com/';
   }
 
   return 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/';
@@ -161,6 +168,11 @@ function getMarketPrices(lens) {
     'FE 70-200mm F2.8 GM OSS AF': { used: 6800, new: 9500, hk: 9200, msrp: 16000 },
     'FE 70-200mm F2.8 GM OSS II AF': { used: 14500, new: 16800, hk: 16200, msrp: 18999 },
     'FE 100-400mm F4.5-5.6 GM OSS AF': { used: 10500, new: 13200, hk: 12800, msrp: 16000 },
+    'FE 28-70mm F2.0 GM AF': { used: 19250, new: 22000, hk: 23800, msrp: 22000 },
+    'FE 100-400mm F5.6-8 OSS AF': { used: 0, new: 6299, hk: 6800, msrp: 6299 },
+    '50mm F2.0 TRI-SIGHT MF': { used: 0, new: 1299, hk: 1400, msrp: 1299 },
+    'Swift 20mm F2.4 AF': { used: 0, new: 999, hk: 1100, msrp: 999 },
+    'Swift 40mm F2.2 AF': { used: 0, new: 999, hk: 1100, msrp: 999 },
 
     // 适马
     '14mm F1.4 DG DN AF': { used: 6800, new: 8200, hk: 8000, msrp: 9300 },
@@ -591,7 +603,7 @@ function restoreAndUpgrade() {
     distortionScore: 4.6,
     overallScore: 97.2,
     portabilityScore: 48,
-    valueScore: 78,
+    valueScore: 82,
   };
 
   const sigma2060 = {
@@ -638,7 +650,7 @@ function restoreAndUpgrade() {
     distortionScore: 4.1,
     overallScore: 84.5,
     portabilityScore: 89,
-    valueScore: 86,
+    valueScore: 89,
   };
 
   const sony400 = {
@@ -668,13 +680,13 @@ function restoreAndUpgrade() {
     distortionScore: 4.8,
     overallScore: 97.2,
     portabilityScore: 38,
-    valueScore: 60.6,
+    valueScore: 60.8,
     releaseDate: '2026.9',
     minFocusDist: '250',
     weightG: 994,
     lengthMm: 242,
     filterThread: '95',
-    priceCny: 19999,
+    priceCny: 18999,
     officialUrl: 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel400f45gm',
     isGM: true,
     isG: false,
@@ -683,9 +695,9 @@ function restoreAndUpgrade() {
     isPZ: false,
     isCine: false,
     priceUsed: 0,
-    priceNew: 19999,
-    priceHk: 21800,
-    priceMsrp: 19999,
+    priceNew: 18999,
+    priceHk: 20500,
+    priceMsrp: 18999,
   };
 
   const sony600 = {
@@ -715,13 +727,13 @@ function restoreAndUpgrade() {
     distortionScore: 4.8,
     overallScore: 95.4,
     portabilityScore: 38,
-    valueScore: 59.3,
+    valueScore: 59.5,
     releaseDate: '2026.9',
     minFocusDist: '350',
     weightG: 995,
     lengthMm: 263,
     filterThread: '95',
-    priceCny: 26999,
+    priceCny: 24999,
     officialUrl: 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel600f63gm',
     isGM: true,
     isG: false,
@@ -730,9 +742,9 @@ function restoreAndUpgrade() {
     isPZ: false,
     isCine: false,
     priceUsed: 0,
-    priceNew: 26999,
-    priceHk: 29500,
-    priceMsrp: 26999,
+    priceNew: 24999,
+    priceHk: 27000,
+    priceMsrp: 24999,
   };
 
   const sony814 = {
@@ -762,13 +774,13 @@ function restoreAndUpgrade() {
     distortionScore: 2.5,
     overallScore: 85.3,
     portabilityScore: 86,
-    valueScore: 50.6,
+    valueScore: 51.1,
     releaseDate: '2026.9',
     minFocusDist: '15',
     weightG: 314,
     lengthMm: 82.8,
     filterThread: '后置',
-    priceCny: 11999,
+    priceCny: 9999,
     officialUrl: 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel0814g',
     isGM: false,
     isG: true,
@@ -777,9 +789,56 @@ function restoreAndUpgrade() {
     isPZ: false,
     isCine: false,
     priceUsed: 0,
-    priceNew: 11999,
-    priceHk: 12900,
-    priceMsrp: 11999,
+    priceNew: 9999,
+    priceHk: 10800,
+    priceMsrp: 9999,
+  };
+
+  const sony100400 = {
+    id: 'lens-sony-fe-100-400mm-f56-8-oss-af',
+    index: 0,
+    name: 'FE 100-400mm F5.6-8 OSS AF',
+    brandZh: '索尼 (Sony)',
+    brandEn: 'Sony',
+    brandCategory: 'sony',
+    type: '变焦',
+    focalMin: 100,
+    focalMax: 400,
+    focalDesc: '100-400mm',
+    focalCategory: ['telephoto', 'super-telephoto'],
+    apertureDesc: 'F5.6-8',
+    maxAperture: 5.6,
+    focusType: '自动对焦 (AF)',
+    isAF: true,
+    ossDesc: '支持防抖',
+    hasOSS: true,
+    sharpnessStar: '★★★★',
+    sharpnessScore: 3.8,
+    uniformityScore: 3.6,
+    wideOpenScore: 3.7,
+    caControlScore: 3.9,
+    bokehScore: 3.4,
+    distortionScore: 3.6,
+    overallScore: 73.5,
+    portabilityScore: 76,
+    valueScore: 75.2,
+    releaseDate: '2026.8',
+    minFocusDist: '86-113',
+    weightG: 654,
+    lengthMm: 164.5,
+    filterThread: '67',
+    priceCny: 6299,
+    officialUrl: 'https://electronics.sony.com/imaging/lenses/all-e-mount/p/sel100400',
+    isGM: false,
+    isG: false,
+    isZeiss: false,
+    isMacro: false,
+    isPZ: false,
+    isCine: false,
+    priceUsed: 0,
+    priceNew: 6299,
+    priceHk: 6800,
+    priceMsrp: 6299,
   };
 
   const sigma50cl = {
@@ -876,13 +935,158 @@ function restoreAndUpgrade() {
     priceMsrp: 3899,
   };
 
+  const brightinstar50trisight = {
+    id: 'lens-brightinstar-50mm-f20-tri-sight-mf',
+    index: 0,
+    name: '50mm F2.0 TRI-SIGHT MF',
+    brandZh: '星曜',
+    brandEn: 'Brightin Star',
+    brandCategory: 'other',
+    type: '定焦',
+    focalMin: 50,
+    focalMax: 50,
+    focalDesc: '50mm',
+    focalCategory: ['standard'],
+    apertureDesc: 'F2.0',
+    maxAperture: 2.0,
+    focusType: '手动对焦 (MF)',
+    isAF: false,
+    ossDesc: '不支持防抖',
+    hasOSS: false,
+    sharpnessStar: '★★★★',
+    sharpnessScore: 3.4,
+    uniformityScore: 3.0,
+    wideOpenScore: 3.2,
+    caControlScore: 3.0,
+    bokehScore: 4.5,
+    distortionScore: 3.6,
+    overallScore: 68.2,
+    portabilityScore: 84,
+    valueScore: 68.0,
+    releaseDate: '2026.10',
+    minFocusDist: '50',
+    weightG: 360,
+    lengthMm: 58,
+    filterThread: '55',
+    priceCny: 1299,
+    officialUrl: 'https://brightinstar.com/products/50mm-f2-tri-sight',
+    isGM: false,
+    isG: false,
+    isZeiss: false,
+    isMacro: false,
+    isPZ: false,
+    isCine: false,
+    priceUsed: 0,
+    priceNew: 1299,
+    priceHk: 1400,
+    priceMsrp: 1299,
+  };
+
+  const sirui20 = {
+    id: 'lens-sirui-swift-20mm-f24-af',
+    index: 0,
+    name: 'Swift 20mm F2.4 AF',
+    brandZh: '思锐',
+    brandEn: 'Sirui',
+    brandCategory: 'other',
+    type: '定焦',
+    focalMin: 20,
+    focalMax: 20,
+    focalDesc: '20mm',
+    focalCategory: ['ultra-wide'],
+    apertureDesc: 'F2.4',
+    maxAperture: 2.4,
+    focusType: '自动对焦 (AF)',
+    isAF: true,
+    ossDesc: '不支持防抖',
+    hasOSS: false,
+    sharpnessStar: '★★★★',
+    sharpnessScore: 3.8,
+    uniformityScore: 3.4,
+    wideOpenScore: 3.5,
+    caControlScore: 3.6,
+    bokehScore: 3.4,
+    distortionScore: 3.5,
+    overallScore: 72.8,
+    portabilityScore: 90,
+    valueScore: 88.5,
+    releaseDate: '2026.11',
+    minFocusDist: '20',
+    weightG: 207,
+    lengthMm: 60.3,
+    filterThread: '58',
+    priceCny: 999,
+    officialUrl: 'https://www.sirui.com/products/sirui-swift-20mm-f2-4-autofocus-lens',
+    isGM: false,
+    isG: false,
+    isZeiss: false,
+    isMacro: false,
+    isPZ: false,
+    isCine: false,
+    priceUsed: 0,
+    priceNew: 999,
+    priceHk: 1100,
+    priceMsrp: 999,
+  };
+
+  const sirui40 = {
+    id: 'lens-sirui-swift-40mm-f22-af',
+    index: 0,
+    name: 'Swift 40mm F2.2 AF',
+    brandZh: '思锐',
+    brandEn: 'Sirui',
+    brandCategory: 'other',
+    type: '定焦',
+    focalMin: 40,
+    focalMax: 40,
+    focalDesc: '40mm',
+    focalCategory: ['standard'],
+    apertureDesc: 'F2.2',
+    maxAperture: 2.2,
+    focusType: '自动对焦 (AF)',
+    isAF: true,
+    ossDesc: '不支持防抖',
+    hasOSS: false,
+    sharpnessStar: '★★★★+',
+    sharpnessScore: 4.0,
+    uniformityScore: 3.6,
+    wideOpenScore: 3.8,
+    caControlScore: 3.8,
+    bokehScore: 4.0,
+    distortionScore: 4.0,
+    overallScore: 78.4,
+    portabilityScore: 90,
+    valueScore: 92.0,
+    releaseDate: '2026.11',
+    minFocusDist: '40',
+    weightG: 210,
+    lengthMm: 62.3,
+    filterThread: '58',
+    priceCny: 999,
+    officialUrl: 'https://www.sirui.com/products/sirui-swift-40mm-f2-2-autofocus-lens',
+    isGM: false,
+    isG: false,
+    isZeiss: false,
+    isMacro: false,
+    isPZ: false,
+    isCine: false,
+    priceUsed: 0,
+    priceNew: 999,
+    priceHk: 1100,
+    priceMsrp: 999,
+  };
+
   // 置顶加入全新镜头
   const finalList = [
+    sirui20,
+    sirui40,
     sony400,
     sony600,
     sony814,
+    sony100400,
     sigma50cl,
     viltrox35pro,
+    brightinstar50trisight,
     sigma85,
     sigma2060,
     ...originalLenses,
