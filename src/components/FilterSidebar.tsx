@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Filter, RotateCcw, X, Shield, DollarSign, Weight, Star, PanelLeftClose } from 'lucide-react';
+import { Filter, RotateCcw, X, Shield, DollarSign, Weight, Star, PanelLeftClose, SlidersHorizontal, ChevronDown, ChevronUp } from 'lucide-react';
 import { FilterState, BrandCategory, FocalCategory } from '../types/lens';
 
 interface FilterSidebarProps {
@@ -38,18 +38,51 @@ const FOCAL_RANGES: { key: FocalCategory; labelKey: string; desc: string }[] = [
   { key: 'super-telephoto', labelKey: 'filters.focalRanges.superTelephoto', desc: '>135mm' },
 ];
 
-const QUICK_FOCALS = [
+const PRIME_FOCAL_PRESETS: { label: string; min: number; max: number }[] = [
   { label: '全部', min: 8, max: 800 },
-  { label: '≤24mm', min: 8, max: 24 },
+  { label: '14mm', min: 14, max: 14 },
+  { label: '15mm', min: 15, max: 15 },
+  { label: '18mm', min: 18, max: 18 },
+  { label: '20mm', min: 20, max: 20 },
   { label: '24mm', min: 24, max: 24 },
   { label: '28mm', min: 28, max: 28 },
   { label: '35mm', min: 35, max: 35 },
+  { label: '40mm', min: 40, max: 40 },
   { label: '50mm', min: 50, max: 50 },
+  { label: '55mm', min: 55, max: 55 },
+  { label: '75mm', min: 75, max: 75 },
   { label: '85mm', min: 85, max: 85 },
+  { label: '90mm', min: 90, max: 90 },
+  { label: '100mm', min: 100, max: 100 },
+  { label: '105mm', min: 105, max: 105 },
   { label: '135mm', min: 135, max: 135 },
   { label: '≥200mm', min: 200, max: 800 },
+];
+
+const ZOOM_FOCAL_PRESETS: { label: string; min: number; max: number }[] = [
+  { label: '全部', min: 8, max: 800 },
+  { label: '12-24mm', min: 12, max: 24 },
+  { label: '16-35mm', min: 16, max: 35 },
+  { label: '20-70mm', min: 20, max: 70 },
   { label: '24-70mm', min: 24, max: 70 },
+  { label: '28-75mm', min: 28, max: 75 },
   { label: '70-200mm', min: 70, max: 200 },
+  { label: '100-400mm', min: 100, max: 400 },
+  { label: '200-600mm', min: 200, max: 600 },
+];
+
+const ALL_FOCAL_PRESETS: { label: string; min: number; max: number }[] = [
+  { label: '全部', min: 8, max: 800 },
+  { label: '≤24mm', min: 8, max: 24 },
+  { label: '16-35mm', min: 16, max: 35 },
+  { label: '24-70mm', min: 24, max: 70 },
+  { label: '28-75mm', min: 28, max: 75 },
+  { label: '35mm', min: 35, max: 35 },
+  { label: '50mm', min: 50, max: 50 },
+  { label: '70-200mm', min: 70, max: 200 },
+  { label: '85mm', min: 85, max: 85 },
+  { label: '100-400mm', min: 100, max: 400 },
+  { label: '≥200mm', min: 200, max: 800 },
 ];
 
 const FILTER_THREADS = ['all', '49', '55', '67', '72', '77', '82', '86', '95'];
@@ -65,6 +98,15 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   onMobileClose,
 }) => {
   const { t } = useTranslation();
+  const [showDualSliders, setShowDualSliders] = React.useState(false);
+
+  const isPrimeMode = filters.type === '定焦';
+  const isZoomMode = filters.type === '变焦';
+  const focalPresets = isPrimeMode
+    ? PRIME_FOCAL_PRESETS
+    : isZoomMode
+    ? ZOOM_FOCAL_PRESETS
+    : ALL_FOCAL_PRESETS;
 
   const content = (
     <div className="space-y-6 pb-6 select-none">
@@ -218,8 +260,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
       {/* 4. 精确焦段范围与滑块 */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider">
-            {t('filters.exactFocalSlider')}
+          <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+            <span>
+              {isPrimeMode
+                ? t('filters.primeFocalQuick')
+                : isZoomMode
+                ? t('filters.zoomFocalQuick')
+                : t('filters.exactFocalSlider')}
+            </span>
           </label>
           <span className="text-xs font-mono font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded-full border border-orange-500/20">
             {filters.focalLengthMin <= 8 && filters.focalLengthMax >= 800
@@ -231,21 +279,34 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
 
         {/* 常用焦段快捷标签 */}
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {QUICK_FOCALS.map((qf) => {
-            const isSelected =
-              filters.focalLengthMin === qf.min && filters.focalLengthMax === qf.max;
+        <div className="flex flex-wrap gap-1.5 mb-2.5">
+          {focalPresets.map((qf) => {
+            const isAll = qf.min <= 8 && qf.max >= 800;
+            const isSelected = isAll
+              ? filters.focalLengthMin <= 8 && filters.focalLengthMax >= 800
+              : filters.focalLengthMin === qf.min && filters.focalLengthMax === qf.max;
+
             return (
               <button
                 key={qf.label}
-                onClick={() =>
-                  onFilterChange({
-                    ...filters,
-                    focalLengthMin: qf.min,
-                    focalLengthMax: qf.max,
-                    preset: null,
-                  })
-                }
+                type="button"
+                onClick={() => {
+                  if (isSelected && !isAll) {
+                    onFilterChange({
+                      ...filters,
+                      focalLengthMin: 8,
+                      focalLengthMax: 800,
+                      preset: null,
+                    });
+                  } else {
+                    onFilterChange({
+                      ...filters,
+                      focalLengthMin: qf.min,
+                      focalLengthMax: qf.max,
+                      preset: null,
+                    });
+                  }
+                }}
                 className={`px-2 py-0.5 rounded-lg text-xs font-mono font-medium transition-all ${
                   isSelected
                     ? 'bg-orange-500 text-white font-bold shadow-sm'
@@ -258,55 +319,151 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           })}
         </div>
 
-        {/* 最短焦距滑块 */}
-        <div className="space-y-1 mb-2.5">
-          <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
-            <span>{t('filters.focalMin')}: {filters.focalLengthMin}mm</span>
-            <span className="text-[10px] text-slate-400">8mm ~ 600mm</span>
-          </div>
-          <input
-            type="range"
-            min="8"
-            max="600"
-            step="1"
-            value={filters.focalLengthMin}
-            onChange={(e) => {
-              const val = parseInt(e.target.value, 10);
-              onFilterChange({
-                ...filters,
-                focalLengthMin: val,
-                focalLengthMax: Math.max(val, filters.focalLengthMax),
-                preset: null,
-              });
-            }}
-            className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
-          />
-        </div>
+        {/* 定焦模式下折叠双滑轨，变焦/全部模式下默认直接展示 */}
+        {isPrimeMode ? (
+          <div>
+            <div className="flex items-center justify-between text-xs pt-0.5">
+              <button
+                type="button"
+                onClick={() => setShowDualSliders(!showDualSliders)}
+                className="flex items-center gap-1 text-[11px] text-slate-500 dark:text-slate-400 hover:text-orange-600 dark:hover:text-orange-400 font-medium transition-colors"
+              >
+                <SlidersHorizontal className="w-3 h-3 text-orange-500" />
+                <span>
+                  {showDualSliders ? t('filters.collapseDualSliders') : t('filters.expandDualSliders')}
+                </span>
+                {showDualSliders ? (
+                  <ChevronUp className="w-3 h-3" />
+                ) : (
+                  <ChevronDown className="w-3 h-3" />
+                )}
+              </button>
 
-        {/* 最长焦距滑块 */}
-        <div className="space-y-1">
-          <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
-            <span>{t('filters.focalMax')}: {filters.focalLengthMax}mm</span>
-            <span className="text-[10px] text-slate-400">9mm ~ 800mm</span>
+              {(filters.focalLengthMin > 8 || filters.focalLengthMax < 800) && (
+                <button
+                  type="button"
+                  onClick={() =>
+                    onFilterChange({
+                      ...filters,
+                      focalLengthMin: 8,
+                      focalLengthMax: 800,
+                      preset: null,
+                    })
+                  }
+                  className="text-[11px] text-orange-500 hover:underline"
+                >
+                  {t('filters.focalUnlimited')}
+                </button>
+              )}
+            </div>
+
+            {showDualSliders && (
+              <div className="mt-2.5 pt-2.5 border-t border-slate-200 dark:border-slate-800 space-y-2">
+                {/* 最短焦距滑块 */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                    <span>{t('filters.focalMin')}: {filters.focalLengthMin}mm</span>
+                    <span className="text-[10px] text-slate-400">8mm ~ 600mm</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="8"
+                    max="600"
+                    step="1"
+                    value={filters.focalLengthMin}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value, 10);
+                      onFilterChange({
+                        ...filters,
+                        focalLengthMin: val,
+                        focalLengthMax: Math.max(val, filters.focalLengthMax),
+                        preset: null,
+                      });
+                    }}
+                    className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                </div>
+
+                {/* 最长焦距滑块 */}
+                <div className="space-y-1">
+                  <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                    <span>{t('filters.focalMax')}: {filters.focalLengthMax}mm</span>
+                    <span className="text-[10px] text-slate-400">9mm ~ 800mm</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="9"
+                    max="800"
+                    step="1"
+                    value={filters.focalLengthMax}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value, 10);
+                      onFilterChange({
+                        ...filters,
+                        focalLengthMax: val,
+                        focalLengthMin: Math.min(val, filters.focalLengthMin),
+                        preset: null,
+                      });
+                    }}
+                    className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                  />
+                </div>
+              </div>
+            )}
           </div>
-          <input
-            type="range"
-            min="9"
-            max="800"
-            step="1"
-            value={filters.focalLengthMax}
-            onChange={(e) => {
-              const val = parseInt(e.target.value, 10);
-              onFilterChange({
-                ...filters,
-                focalLengthMax: val,
-                focalLengthMin: Math.min(val, filters.focalLengthMin),
-                preset: null,
-              });
-            }}
-            className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
-          />
-        </div>
+        ) : (
+          <div className="space-y-2.5">
+            {/* 最短焦距滑块 */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                <span>{t('filters.focalMin')}: {filters.focalLengthMin}mm</span>
+                <span className="text-[10px] text-slate-400">8mm ~ 600mm</span>
+              </div>
+              <input
+                type="range"
+                min="8"
+                max="600"
+                step="1"
+                value={filters.focalLengthMin}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value, 10);
+                  onFilterChange({
+                    ...filters,
+                    focalLengthMin: val,
+                    focalLengthMax: Math.max(val, filters.focalLengthMax),
+                    preset: null,
+                  });
+                }}
+                className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
+              />
+            </div>
+
+            {/* 最长焦距滑块 */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                <span>{t('filters.focalMax')}: {filters.focalLengthMax}mm</span>
+                <span className="text-[10px] text-slate-400">9mm ~ 800mm</span>
+              </div>
+              <input
+                type="range"
+                min="9"
+                max="800"
+                step="1"
+                value={filters.focalLengthMax}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value, 10);
+                  onFilterChange({
+                    ...filters,
+                    focalLengthMax: val,
+                    focalLengthMin: Math.min(val, filters.focalLengthMin),
+                    preset: null,
+                  });
+                }}
+                className="w-full h-1.5 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-orange-500"
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 5. 焦段分类 */}

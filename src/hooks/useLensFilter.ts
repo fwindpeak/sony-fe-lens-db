@@ -339,8 +339,11 @@ export function useLensFilter(allLenses: Lens[]) {
 
       if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
       if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
-      // 次级排序按综合分倒序
-      return b.overallScore - a.overallScore;
+      // 次级排序按综合分倒序，再按原始索引保证稳定排序
+      if (b.overallScore !== a.overallScore) {
+        return b.overallScore - a.overallScore;
+      }
+      return a.index - b.index;
     });
   }, [filteredLenses, searchScoreMap, sortField, sortDirection, filters.search]);
 

@@ -38,13 +38,13 @@ export const SortControls: React.FC<SortControlsProps> = ({
   const { t } = useTranslation();
 
   const sortFieldsList: { field: SortField; defaultDirection: SortDirection }[] = [
+    { field: 'releaseDate', defaultDirection: 'desc' },
     { field: 'overallScore', defaultDirection: 'desc' },
     { field: 'valueScore', defaultDirection: 'desc' },
     { field: 'portabilityScore', defaultDirection: 'desc' },
     { field: 'sharpnessScore', defaultDirection: 'desc' },
     { field: 'priceCny', defaultDirection: 'asc' },
     { field: 'weightG', defaultDirection: 'asc' },
-    { field: 'releaseDate', defaultDirection: 'desc' },
     { field: 'focalMin', defaultDirection: 'asc' },
     { field: 'maxAperture', defaultDirection: 'asc' },
   ];

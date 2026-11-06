@@ -192,8 +192,8 @@ export function parseStateFromUrl(searchStr: string = window.location.search): {
     filters.preset = preset;
   }
 
-  // 15. 排序字段
-  let sortField: SortField = 'overallScore';
+  // 15. 排序字段 (默认按上市发布时间最新到最晚)
+  let sortField: SortField = 'releaseDate';
   const sortParam = params.get('sort');
   if (sortParam && VALID_SORT_FIELDS.includes(sortParam as SortField)) {
     sortField = sortParam as SortField;
@@ -337,8 +337,8 @@ export function serializeStateToUrl(state: {
     params.set('thread', filters.filterThread);
   }
 
-  // 15. 排序
-  if (sortField !== 'overallScore') {
+  // 15. 排序 (默认 releaseDate desc 不写入参数)
+  if (sortField !== 'releaseDate') {
     params.set('sort', sortField);
   }
   if (sortDirection !== 'desc') {
